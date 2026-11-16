@@ -1,0 +1,138 @@
+<section class="page-hero">
+  <div class="hero-mesh" aria-hidden="true"></div>
+  <div class="hero-orb o1" aria-hidden="true"></div>
+  <div class="hero-orb o3" aria-hidden="true"></div>
+  <div class="container page-hero-grid is-text-only">
+    <div class="page-hero-copy">
+      <nav class="breadcrumbs" aria-label="Navigacijski put"><a href="{{url:home}}">Početna</a><span aria-hidden="true">/</span><span>Kontakt</span></nav>
+      <p class="eyebrow">Kontakt</p>
+      <h1>Napiši nam ukratko o čemu se radi</h1>
+      <p class="lede">U roku 1–2 radna dana dobivaš odgovor s prijedlozima termina za uvodni razgovor od 30 minuta. Besplatno i bez obveze.</p>
+    </div>
+  </div>
+  <div class="section-divider to-white" aria-hidden="true"></div>
+</section>
+
+<section class="section section-contact">
+  <div class="container contact-wrap">
+    <div class="contact-form-card" data-reveal>
+      <h2>Tvoj upit</h2>
+      <p>Obavezna polja označena su s <span class="req">*</span>. Što konkretnije napišeš, to se bolje možemo pripremiti.</p>
+      <form data-contact-form data-phone-optional="(neobavezno)" data-phone-hint="Neobavezno za dodatna pitanja. Bez broja odgovaramo e-poštom." action="https://formsubmit.co/ajax/info@creationfirst.io" method="POST"
+            data-msg-sending="Šaljem …"
+            data-msg-ok="Hvala! Tvoj upit je stigao. Javit ćemo ti se u roku 1–2 radna dana."
+            data-msg-err="Nažalost nije uspjelo. Pokušaj ponovno ili piši izravno na info@creationfirst.io."
+            data-msg-phone="Upiši broj telefona kako bismo te mogli dobiti radi dogovora termina."
+            data-msg-notconfigured="Obrazac trenutačno nije dostupan. Piši nam na info@creationfirst.io.">
+        <div class="form-grid">
+          <div class="form-field">
+            <label for="name">Ime i prezime <span class="req" aria-hidden="true">*</span></label>
+            <input type="text" id="name" name="name" maxlength="200" required autocomplete="name">
+          </div>
+          <div class="form-field">
+            <label for="email">E-mail <span class="req" aria-hidden="true">*</span></label>
+            <input type="email" id="email" name="email" maxlength="320" required autocomplete="email" inputmode="email">
+          </div>
+          <div class="form-field">
+            <label for="phone">Telefon <span class="req" aria-hidden="true">*</span></label>
+            <input type="tel" id="phone" name="phone" maxlength="40" required minlength="5" autocomplete="tel" inputmode="tel" placeholder="+385 … ili +49 …" aria-describedby="phone-hint">
+            <p class="field-hint" id="phone-hint">Za kratka pitanja oko dogovora termina.</p>
+          </div>
+          <div class="form-field">
+            <label for="company">Tvrtka <span class="opt">(opcionalno)</span></label>
+            <input type="text" id="company" name="company" autocomplete="organization">
+          </div>
+          <div class="form-field">
+            <label for="service">O čemu se radi?</label>
+            <select id="service" name="service">
+<option data-topic="call">Još nije jasno / uvodni razgovor</option>
+<option data-topic="web">Web-stranica ili webshop</option>
+<option data-topic="ai">Automatizacija procesa</option>
+<option data-topic="app">Prilagođeni alat / aplikacija</option>
+<option data-topic="retainer">Poboljšanje postojećeg</option>
+<option data-topic="other">Nešto drugo</option>
+</select>
+          </div>
+          <div class="form-field">
+            <label for="budget">Okvirni budžet</label>
+            <select id="budget" name="budget">
+              <option>Još nije jasno</option>
+              <option>do 2.000 €</option>
+              <option>2.000–5.000 €</option>
+              <option>5.000–15.000 €</option>
+              <option>više od 15.000 €</option>
+            </select>
+          </div>
+          <div class="form-field full">
+            <label for="message">Poruka <span class="req" aria-hidden="true">*</span></label>
+            <textarea id="message" name="message" maxlength="5000" required placeholder="Što treba biti bolje? Što danas koristite? Postoji li rok?"></textarea>
+          </div>
+        </div>
+        <input class="hp-field" type="text" name="_gotcha" tabindex="-1" autocomplete="off" aria-hidden="true">
+        <label class="form-consent">
+          <input type="checkbox" required>
+          <span>Pročitao/la sam <a href="{{url:privacy}}">politiku privatnosti</a> i slažem se da se moji podaci obrađuju radi odgovora na upit.</span>
+        </label>
+        <button class="btn btn-primary btn-block" type="submit">Pošalji upit {{icon:arrow}}</button>
+        <p class="form-status" role="status" aria-live="polite"></p>
+        <p class="form-hint">Radije izravno? Piši na <a href="mailto:info@creationfirst.io">info@creationfirst.io</a> ili nazovi <a href="tel:+491621717423">+49 162 1717423</a>.</p>
+      </form>
+    </div>
+
+    <aside class="contact-aside" data-reveal="right">
+      <div class="contact-person contact-team">
+        <div class="contact-team-icon">{{icon:users}}</div>
+        <div><b>Tvoj upit stiže izravno k nama</b><span>Bez pozivnog centra i bez ticket sustava. Stalna kontakt osoba iz našeg tima javit će ti se osobno.</span></div>
+      </div>
+      <div class="next-steps">
+        <h3>Što slijedi</h3>
+        <ol>
+          <li><span class="num">1</span><div><b>Pošalješ upit</b>Odmah vidiš potvrdu u obrascu.</div></li>
+          <li><span class="num">2</span><div><b>Pročitamo i pripremimo se</b>Pogledamo tvoj upit i skupimo prve ideje.</div></li>
+          <li><span class="num">3</span><div><b>Dobivaš prijedloge termina</b>U roku 1–2 radna dana, e-mailom ili kratkim pozivom.</div></li>
+        </ol>
+      </div>
+      <div class="contact-info-card">
+        <div class="contact-info-row">{{icon:mail}}<div><b>E-mail</b><a href="mailto:info@creationfirst.io">info@creationfirst.io</a></div></div>
+        <div class="contact-info-row">{{icon:phone}}<div><b>Telefon</b><a href="tel:+491621717423">+49 162 1717423</a></div></div>
+        <div class="contact-info-row">{{icon:clock}}<div><b>Dostupnost</b><span>pon–pet, 9–17 h</span></div></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<section class="section bg-alt" id="faq">
+  <div class="container container-narrow">
+    <div class="section-head" data-reveal>
+      <p class="eyebrow">Česta pitanja</p>
+      <h2>O uvodnom razgovoru</h2>
+    </div>
+    <div class="faq-list" data-reveal>
+      <div class="faq-item">
+        <button class="faq-q" type="button">Naručujem li ovdje već kratku analizu ili audit? {{icon:plus}}</button>
+        <div class="faq-a"><div class="faq-a-inner">Ne. Ovim obrascem tražiš besplatan uvodni razgovor. Ima li smisla kratka analiza, audit ili sprint, dogovorimo zajedno nakon toga. Kako teče suradnja, pogledaj pod <a href="{{url:services#suradnja}}">Usluge</a>.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button">Koliko brzo dobivam odgovor? {{icon:plus}}</button>
+        <div class="faq-a"><div class="faq-a-inner">U pravilu u roku 1–2 radna dana, s prijedlozima termina za uvodni razgovor.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button">Zašto vam treba moj broj telefona? {{icon:plus}}</button>
+        <div class="faq-a"><div class="faq-a-inner">Da te kratko nazovemo ako nešto nije jasno, umjesto da danima šaljemo e-mailove. Prodajnih poziva od nas nema.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button">Moram li već točno znati što mi treba? {{icon:plus}}</button>
+        <div class="faq-a"><div class="faq-a-inner">Ne. Dovoljan je grubi opis. Ostalo razjasnimo u razgovoru.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button">Mogu li pisati na njemačkom ili engleskom? {{icon:plus}}</button>
+        <div class="faq-a"><div class="faq-a-inner">Naravno. Odgovaramo na jeziku na kojem pišeš.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button">Je li uvodni razgovor stvarno besplatan? {{icon:plus}}</button>
+        <div class="faq-a"><div class="faq-a-inner">Da. 30 minuta, besplatno i bez obveze. Dobivaš iskrenu procjenu, čak i ako nismo pravi izbor za tvoj projekt.</div></div>
+      </div>
+    </div>
+    <p class="faq-after">Kratko pitanje? Piši na <a href="mailto:info@creationfirst.io">info@creationfirst.io</a>.</p>
+  </div>
+</section>
