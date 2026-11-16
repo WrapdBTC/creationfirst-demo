@@ -17,7 +17,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 SRC = os.path.join(HERE, "src")
 BASE = "https://creationfirst.io/"
-VER = "20261117-1"
+VER = "20261117-2"
 # DEMO=1 python3 _build/build.py  -> Vorschau-Build: noindex auf allen Seiten und Hinweisleiste oben.
 DEMO = os.environ.get("DEMO") == "1"
 YEAR = "2026"
