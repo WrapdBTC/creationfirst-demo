@@ -1696,3 +1696,83 @@ h3 { letter-spacing: -.02em; font-weight: 650; }
   .next-hero::after, .next-hero-copy > *, .live-demo, .ld-live i, .is-ready .ld-approve { animation: none; }
   .ld-fields > div, .ld-lines li, .ld-draft { transition: none; }
 }
+
+/* 20 Bewegung & Unterseiten: gilt auf allen Seiten. Alles hier ist Zusatz; ohne JavaScript,
+   bei „Bewegung reduzieren“ oder in älteren Browsern bleibt die Seite vollständig lesbar. */
+@view-transition { navigation: auto; }
+.scroll-progress { display: block; height: 3px; background: var(--gradient-brand); }
+
+/* Unterseiten-Heros: Raster, Lichtschein der dem Mauszeiger folgt, größere Überschrift */
+.hero, .page-hero { background: #090d18; isolation: isolate; }
+.hero::before, .page-hero::before {
+  content: ""; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  background:
+    radial-gradient(560px circle at var(--hx, 78%) var(--hy, 8%), rgba(99, 102, 241, .34), transparent 62%),
+    radial-gradient(520px circle at 4% 104%, rgba(34, 211, 238, .16), transparent 60%),
+    linear-gradient(to right, rgba(255, 255, 255, .055) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(to bottom, rgba(255, 255, 255, .055) 1px, transparent 1px) 0 0 / 56px 56px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+  mask-image: linear-gradient(to bottom, #000 55%, transparent 100%);
+}
+.hero h1, .page-hero h1 { font-size: clamp(2.4rem, 4.8vw, 4.3rem); font-weight: 800; line-height: 1.03; letter-spacing: -.035em; }
+.page-hero-slim h1 { font-size: clamp(2rem, 1.5rem + 2vw, 2.8rem); }
+.studio-hero.compact { position: relative; overflow: hidden; isolation: isolate; }
+.studio-hero.compact::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background:
+    radial-gradient(560px circle at var(--hx, 78%) var(--hy, 8%), rgba(99, 102, 241, .2), transparent 62%),
+    linear-gradient(to right, var(--color-border) 1px, transparent 1px) 0 0 / 56px 56px,
+    linear-gradient(to bottom, var(--color-border) 1px, transparent 1px) 0 0 / 56px 56px;
+  -webkit-mask-image: radial-gradient(90% 90% at 70% 20%, #000 0%, transparent 78%);
+  mask-image: radial-gradient(90% 90% at 70% 20%, #000 0%, transparent 78%);
+  opacity: .7;
+}
+.studio-hero.compact h1 { font-weight: 800; letter-spacing: -.04em; }
+
+/* Überschrift baut sich Wort für Wort auf */
+.split-word { display: inline-block; opacity: 0; transform: translateY(.55em) rotate(3deg); filter: blur(8px); animation: wordIn .75s var(--ease-out) forwards; animation-delay: calc(var(--i) * 60ms + 120ms); will-change: transform, opacity; }
+@keyframes wordIn { to { opacity: 1; transform: none; filter: none; } }
+
+/* Einblenden beim Scrollen: mehr Weg, leichte Unschärfe */
+[data-reveal] { opacity: 0; transform: translateY(36px) scale(.985); filter: blur(5px); transition: opacity .8s var(--ease-out), transform .8s var(--ease-out), filter .8s var(--ease-out); }
+[data-reveal="left"] { transform: translateX(-40px); }
+[data-reveal="right"] { transform: translateX(40px); }
+[data-reveal].is-visible { opacity: 1; transform: none; filter: none; }
+html:not(.js) [data-reveal] { opacity: 1; transform: none; filter: none; }
+
+/* Karten: Lichtkegel unter dem Mauszeiger, deutlicheres Anheben */
+.spot { background-image: radial-gradient(380px circle at var(--mx, -999px) var(--my, -999px), color-mix(in srgb, var(--color-primary) 16%, transparent), transparent 65%); background-repeat: no-repeat; }
+.card, .usp-card, .process-step, .price-card { transition: transform .35s var(--ease-out), box-shadow .35s ease, border-color .25s ease; }
+.card:hover, .usp-card:hover, .price-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+.card-icon { transition: transform .35s var(--ease-out); }
+
+/* Scroll-gekoppelt (nur wo der Browser es kann): Bilder driften, Abschnittstitel füllen sich */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .service-visual img, .section-figure img, .page-hero-visual img {
+      animation: imgDrift linear both; animation-timeline: view(); animation-range: entry 0% exit 100%;
+    }
+    .section-head h2 {
+      background: linear-gradient(90deg, currentColor 0%, currentColor 46%, color-mix(in srgb, currentColor 24%, transparent) 54%, color-mix(in srgb, currentColor 24%, transparent) 100%) 100% 0 / 220% 100% no-repeat;
+      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
+      animation: titleFill linear both; animation-timeline: view(); animation-range: entry 15% cover 38%;
+    }
+  }
+}
+@keyframes imgDrift { from { transform: scale(1.16) translateY(-6%); } to { transform: scale(1.16) translateY(6%); } }
+@keyframes titleFill { to { background-position: 0 0; } }
+
+/* Laufband vor dem Footer */
+.big-marquee { overflow: hidden; padding: clamp(22px, 3vw, 40px) 0; border-top: 1px solid var(--color-border); background: var(--color-bg); }
+.big-marquee-track { display: flex; width: max-content; animation: marquee 46s linear infinite; }
+.big-marquee:hover .big-marquee-track { animation-play-state: paused; }
+.big-marquee span { font-family: var(--font-display); font-size: clamp(2.8rem, 8vw, 7rem); font-weight: 800; letter-spacing: -.04em; line-height: 1; white-space: nowrap; padding-right: .35em; color: transparent; -webkit-text-stroke: 1.5px var(--color-border-strong); }
+.big-marquee span:nth-child(4n + 1) { -webkit-text-stroke: 0; background: var(--gradient-brand); -webkit-background-clip: text; background-clip: text; }
+.big-marquee i { font-style: normal; font-size: clamp(1.4rem, 3vw, 2.6rem); align-self: center; padding-right: .9em; color: var(--color-primary-text); }
+@keyframes marquee { to { transform: translateX(-50%); } }
+
+@media (prefers-reduced-motion: reduce) {
+  .split-word { animation: none; opacity: 1; transform: none; filter: none; }
+  [data-reveal] { opacity: 1; transform: none; filter: none; }
+  .big-marquee-track { animation: none; }
+}

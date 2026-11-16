@@ -25,6 +25,8 @@ button { font: inherit; cursor: pointer; }
 .demo-bar { background: #1b1f3a; color: #e8eaf6; font-size: 13px; padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 4px 16px; justify-content: center; align-items: center; text-align: center; }
 .demo-bar a { color: #fff; font-weight: 700; }
 .is-preview .demo-bar { display: none; }
+.demo-bar .langs a { font-weight: 600; text-decoration: none; opacity: .75; }
+.demo-bar .langs a[aria-current] { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
 
 .top { position: sticky; top: 0; z-index: 10; background: var(--ink); color: #fff; }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
@@ -133,6 +135,7 @@ footer b { color: #fff; }
 <div class="demo-bar">
   <span>Demo von CreationFirst · Elektro Sommer ist ein erfundener Betrieb, es wird nichts gesendet.</span>
   <a href="../../index.html">← Zurück zu CreationFirst</a>
+  <span class="langs"><a href="./" data-lang="de">DE</a> · <a href="?lang=en" data-lang="en">EN</a> · <a href="?lang=hr" data-lang="hr">HR</a></span>
 </div>
 
 <header class="top">
@@ -310,6 +313,398 @@ footer b { color: #fff; }
   "use strict";
   if (/[?&]preview=1/.test(location.search)) document.documentElement.classList.add("is-preview");
 
+  // Sprache: ?lang=en oder ?lang=hr. Deutsch steht im HTML, die anderen Sprachen ersetzen die Texte
+  // anhand des deutschen Wortlauts (I18N: deutscher Text -> [Englisch, Kroatisch]).
+  var LANG = (location.search.match(/[?&]lang=(en|hr)/) || [])[1] || "de";
+  var I18N = {
+   "Elektro Sommer – Demo-Website von CreationFirst": [
+    "Elektro Sommer – demo website by CreationFirst",
+    "Elektro Sommer – demo web-stranica, CreationFirst"
+   ],
+   "Demo von CreationFirst · Elektro Sommer ist ein erfundener Betrieb, es wird nichts gesendet.": [
+    "Demo by CreationFirst · Elektro Sommer is a made-up business, nothing is sent.",
+    "Demo, CreationFirst · Elektro Sommer je izmišljena tvrtka, ništa se ne šalje."
+   ],
+   "← Zurück zu CreationFirst": [
+    "← Back to CreationFirst",
+    "← Natrag na CreationFirst"
+   ],
+   "Elektro Sommer, Startseite": [
+    "Elektro Sommer, home",
+    "Elektro Sommer, početna"
+   ],
+   "Hauptnavigation": [
+    "Main navigation",
+    "Glavna navigacija"
+   ],
+   "Leistungen": [
+    "Services",
+    "Usluge"
+   ],
+   "Ablauf": [
+    "Process",
+    "Postupak"
+   ],
+   "Anfrage": [
+    "Inquiry",
+    "Upit"
+   ],
+   "Anfrage starten": [
+    "Start inquiry",
+    "Pošalji upit"
+   ],
+   "Meisterbetrieb · Musterstadt und Umgebung": [
+    "Master electricians · Sampletown and surroundings",
+    "Ovlašteni elektroinstalateri · Primjergrad i okolica"
+   ],
+   "Strom, der": [
+    "Power that",
+    "Struja koja"
+   ],
+   "einfach läuft.": [
+    "simply works.",
+    "jednostavno radi."
+   ],
+   "Wallbox, Zählerschrank, Photovoltaik und alles dazwischen. Sauber geplant, pünktlich montiert und verständlich erklärt.": [
+    "Wallboxes, meter cabinets, solar and everything in between. Carefully planned, installed on time and explained in plain words.",
+    "Punjači, razvodni ormari, solarni sustavi i sve između. Uredno planirano, montirano na vrijeme i objašnjeno razumljivo."
+   ],
+   "Anfrage in 60 Sekunden →": [
+    "Inquiry in 60 seconds →",
+    "Upit u 60 sekundi →"
+   ],
+   "1 Werktag": [
+    "1 working day",
+    "1 radni dan"
+   ],
+   "bis zur ersten Rückmeldung": [
+    "until our first reply",
+    "do prvog odgovora"
+   ],
+   "Festpreis": [
+    "Fixed price",
+    "Fiksna cijena"
+   ],
+   "nach dem Vor-Ort-Termin": [
+    "after the on-site visit",
+    "nakon izlaska na teren"
+   ],
+   "12 Leute": [
+    "12 people",
+    "12 ljudi"
+   ],
+   "im Team, davon 3 Meister": [
+    "on the team, 3 of them masters",
+    "u timu, od toga 3 majstora"
+   ],
+   "Was wir für dich erledigen": [
+    "What we take care of",
+    "Što rješavamo za tebe"
+   ],
+   "Vom einzelnen Anschluss bis zur kompletten Sanierung. Du sagst, was du brauchst – wir kümmern uns um Planung, Anmeldung und Montage.": [
+    "From a single connection to a full renovation. You tell us what you need – we handle planning, registration and installation.",
+    "Od jednog priključka do potpune obnove. Ti kažeš što trebaš – mi rješavamo planiranje, prijavu i montažu."
+   ],
+   "Wallbox & E-Mobilität": [
+    "Wallbox & e-mobility",
+    "Punjači i e-mobilnost"
+   ],
+   "Beratung, Montage und Anmeldung beim Netzbetreiber aus einer Hand.": [
+    "Advice, installation and grid registration from one source.",
+    "Savjetovanje, montaža i prijava operatoru mreže na jednom mjestu."
+   ],
+   "Zählerschrank & Sanierung": [
+    "Meter cabinet & renovation",
+    "Razvodni ormar i obnova"
+   ],
+   "Alte Anlagen prüfen, erneuern und fit machen für heutige Lasten.": [
+    "Checking old installations, renewing them and making them fit for today's loads.",
+    "Provjera starih instalacija, obnova i priprema za današnja opterećenja."
+   ],
+   "Photovoltaik & Speicher": [
+    "Solar & storage",
+    "Solarni sustavi i baterije"
+   ],
+   "Anlage planen, montieren und so einstellen, dass sich der Eigenverbrauch lohnt.": [
+    "Planning and installing the system and setting it up so that self-consumption pays off.",
+    "Planiranje i montaža sustava te podešavanje da se vlastita potrošnja isplati."
+   ],
+   "Smart Home & Licht": [
+    "Smart home & lighting",
+    "Pametni dom i rasvjeta"
+   ],
+   "Licht, Rollläden und Heizung bequem steuern, ohne Technik-Wirrwarr.": [
+    "Control lighting, shutters and heating comfortably, without a tangle of tech.",
+    "Udobno upravljanje rasvjetom, roletama i grijanjem, bez tehničke zbrke."
+   ],
+   "Sag uns kurz, worum es geht.": [
+    "Tell us briefly what it is about.",
+    "Reci nam ukratko o čemu se radi."
+   ],
+   "Drei kurze Fragen statt einer langen E-Mail. So haben wir beim Rückruf schon alles, was wir brauchen.": [
+    "Three short questions instead of a long email. That way we already have everything we need when we call back.",
+    "Tri kratka pitanja umjesto dugog e-maila. Tako pri povratnom pozivu već imamo sve što trebamo."
+   ],
+   "Dauert etwa eine Minute": [
+    "Takes about a minute",
+    "Traje oko minutu"
+   ],
+   "Rückmeldung innerhalb eines Werktags": [
+    "A reply within one working day",
+    "Odgovor unutar jednog radnog dana"
+   ],
+   "Unverbindlich und kostenlos": [
+    "Free and without obligation",
+    "Besplatno i bez obveze"
+   ],
+   "Frage 1 von 3": [
+    "Question 1 of 3",
+    "Pitanje 1 od 3"
+   ],
+   "Frage 2 von 3": [
+    "Question 2 of 3",
+    "Pitanje 2 od 3"
+   ],
+   "Frage 3 von 3": [
+    "Question 3 of 3",
+    "Pitanje 3 od 3"
+   ],
+   "Worum geht es?": [
+    "What is it about?",
+    "O čemu se radi?"
+   ],
+   "Wallbox": [
+    "Wallbox",
+    "Punjač"
+   ],
+   "Zählerschrank": [
+    "Meter cabinet",
+    "Razvodni ormar"
+   ],
+   "Photovoltaik": [
+    "Solar",
+    "Solarni sustav"
+   ],
+   "Smart Home": [
+    "Smart home",
+    "Pametni dom"
+   ],
+   "Störung oder Defekt": [
+    "Fault or defect",
+    "Kvar ili smetnja"
+   ],
+   "Etwas anderes": [
+    "Something else",
+    "Nešto drugo"
+   ],
+   "Wo soll gearbeitet werden?": [
+    "Where is the work?",
+    "Gdje se izvode radovi?"
+   ],
+   "Einfamilienhaus": [
+    "Detached house",
+    "Obiteljska kuća"
+   ],
+   "Wohnung": [
+    "Flat",
+    "Stan"
+   ],
+   "Mehrfamilienhaus": [
+    "Apartment building",
+    "Stambena zgrada"
+   ],
+   "Gewerbe": [
+    "Commercial",
+    "Poslovni prostor"
+   ],
+   "Postleitzahl": [
+    "Postcode",
+    "Poštanski broj"
+   ],
+   "z. B. 12345": [
+    "e.g. 12345",
+    "npr. 12345"
+   ],
+   "← Zurück": [
+    "← Back",
+    "← Natrag"
+   ],
+   "Weiter": [
+    "Next",
+    "Dalje"
+   ],
+   "Wann passt es dir?": [
+    "When suits you?",
+    "Kada ti odgovara?"
+   ],
+   "So bald wie möglich": [
+    "As soon as possible",
+    "Što prije"
+   ],
+   "In den nächsten 4 Wochen": [
+    "Within the next 4 weeks",
+    "U sljedeća 4 tjedna"
+   ],
+   "In 2–3 Monaten": [
+    "In 2–3 months",
+    "Za 2–3 mjeseca"
+   ],
+   "Bin flexibel": [
+    "I am flexible",
+    "Fleksibilno"
+   ],
+   "Dein Name": [
+    "Your name",
+    "Tvoje ime"
+   ],
+   "Vor- und Nachname": [
+    "First and last name",
+    "Ime i prezime"
+   ],
+   "Anfrage absenden": [
+    "Send inquiry",
+    "Pošalji upit"
+   ],
+   "Danke,": [
+    "Thanks,",
+    "Hvala,"
+   ],
+   "Wir melden uns innerhalb eines Werktags bei dir. So sieht deine Anfrage bei uns im Büro aus:": [
+    "We will get back to you within one working day. This is what your inquiry looks like in our office:",
+    "Javit ćemo ti se unutar jednog radnog dana. Ovako tvoj upit izgleda u našem uredu:"
+   ],
+   "Neue Anfrage · sortiert im Betrieb angekommen": [
+    "New inquiry · arrived sorted at the business",
+    "Novi upit · stigao razvrstan u tvrtku"
+   ],
+   "Kunde": [
+    "Customer",
+    "Klijent"
+   ],
+   "Anliegen": [
+    "Request",
+    "Upit"
+   ],
+   "Objekt": [
+    "Property",
+    "Objekt"
+   ],
+   "PLZ": [
+    "Postcode",
+    "Poštanski broj"
+   ],
+   "Zeitraum": [
+    "Timeframe",
+    "Rok"
+   ],
+   "Nächster Schritt": [
+    "Next step",
+    "Sljedeći korak"
+   ],
+   "Rückruf einplanen": [
+    "Schedule a call back",
+    "Zakazati povratni poziv"
+   ],
+   "Das ist eine Demo: Es wurde nichts gesendet und nichts gespeichert.": [
+    "This is a demo: nothing was sent and nothing was stored.",
+    "Ovo je demo: ništa nije poslano niti spremljeno."
+   ],
+   "Noch einmal von vorn": [
+    "Start over",
+    "Kreni ispočetka"
+   ],
+   "So läuft es ab": [
+    "How it works",
+    "Kako to ide"
+   ],
+   "Du beantwortest drei Fragen. Wir rufen innerhalb eines Werktags zurück.": [
+    "You answer three questions. We call back within one working day.",
+    "Odgovoriš na tri pitanja. Nazovemo te unutar jednog radnog dana."
+   ],
+   "Vor-Ort-Termin": [
+    "On-site visit",
+    "Izlazak na teren"
+   ],
+   "Wir schauen uns alles an und du bekommst ein Angebot mit festem Preis.": [
+    "We take a look at everything and you receive a fixed-price quote.",
+    "Sve pregledamo, a ti dobivaš ponudu s fiksnom cijenom."
+   ],
+   "Montage": [
+    "Installation",
+    "Montaža"
+   ],
+   "Ein fester Termin, ein sauberer Arbeitsplatz und eine Einweisung am Ende.": [
+    "A fixed date, a tidy workplace and a walkthrough at the end.",
+    "Čvrst termin, uredno radno mjesto i upute na kraju."
+   ],
+   "Mo–Fr 7–17 Uhr": [
+    "Mon–Fri 7 am–5 pm",
+    "Pon–pet 7–17 h"
+   ],
+   "Erfundener Beispielbetrieb, gebaut von CreationFirst.": [
+    "A made-up example business, built by CreationFirst.",
+    "Izmišljena tvrtka kao primjer, izradio CreationFirst."
+   ],
+   "So eine Website für meinen Betrieb →": [
+    "A website like this for my business →",
+    "Ovakva web-stranica za moje poslovanje →"
+   ],
+   "Bitte wähle aus, um was für ein Objekt es geht.": [
+    "Please choose the type of property.",
+    "Odaberi o kakvom se objektu radi."
+   ],
+   "Bitte gib eine fünfstellige Postleitzahl ein.": [
+    "Please enter a five-digit postcode.",
+    "Upiši peteroznamenkasti poštanski broj."
+   ],
+   "Bitte wähle einen Zeitraum.": [
+    "Please choose a timeframe.",
+    "Odaberi rok."
+   ],
+   "Bitte gib deinen Namen ein.": [
+    "Please enter your name.",
+    "Upiši svoje ime."
+   ]
+  };
+  function t(s) {
+    if (LANG === "de") return s;
+    var e = I18N[s];
+    return e ? e[LANG === "en" ? 0 : 1] : s;
+  }
+  (function () {
+    var bar = document.querySelector(".demo-bar .langs");
+    if (bar) {
+      var keep = /[?&]preview=1/.test(location.search) ? "preview=1&" : "";
+      bar.querySelectorAll("a").forEach(function (a) {
+        var l = a.getAttribute("data-lang");
+        a.setAttribute("href", l === "de" ? (keep ? "?preview=1" : "./") : "?" + keep + "lang=" + l);
+        if (l === LANG) a.setAttribute("aria-current", "true");
+      });
+    }
+    if (LANG === "de") return;
+    document.documentElement.lang = LANG;
+    document.title = t(document.title);
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (n) {
+      var p = n.parentNode && n.parentNode.nodeName;
+      if (p === "SCRIPT" || p === "STYLE") return;
+      var key = n.nodeValue.replace(/\s+/g, " ").trim();
+      if (key && I18N[key]) n.nodeValue = n.nodeValue.replace(n.nodeValue.trim(), t(key));
+    });
+    ["placeholder", "aria-label"].forEach(function (attr) {
+      document.querySelectorAll("[" + attr + "]").forEach(function (el) { el.setAttribute(attr, t(el.getAttribute(attr))); });
+    });
+    var home = { en: "../../en/index.html", hr: "../../hr/index.html" }[LANG];
+    var contact = { en: "../../en/contact.html", hr: "../../hr/kontakt.html" }[LANG];
+    document.querySelectorAll('a[href^="../../"]').forEach(function (a) {
+      var h = a.getAttribute("href");
+      if (h.indexOf("../../index.html") === 0) a.setAttribute("href", home);
+      else if (h.indexOf("../../kontakt.html") === 0) a.setAttribute("href", contact + h.slice("../../kontakt.html".length));
+    });
+  })();
+
   var wizard = document.getElementById("wizard");
   var steps = wizard.querySelectorAll(".step");
   var bars = wizard.querySelectorAll(".progress i");
@@ -339,8 +734,8 @@ footer b { color: #fff; }
 
   wizard.querySelector(".next").addEventListener("click", function () {
     var plz = document.getElementById("plz").value.trim();
-    if (!answers.place) return hint("Bitte wähle aus, um was für ein Objekt es geht.");
-    if (!/^\d{5}$/.test(plz)) return hint("Bitte gib eine fünfstellige Postleitzahl ein.");
+    if (!answers.place) return hint(t("Bitte wähle aus, um was für ein Objekt es geht."));
+    if (!/^\d{5}$/.test(plz)) return hint(t("Bitte gib eine fünfstellige Postleitzahl ein."));
     answers.plz = plz;
     hint("");
     show(2);
@@ -348,8 +743,8 @@ footer b { color: #fff; }
 
   wizard.querySelector(".send").addEventListener("click", function () {
     var name = document.getElementById("name").value.trim();
-    if (!answers.when) return hint("Bitte wähle einen Zeitraum.");
-    if (name.length < 2) return hint("Bitte gib deinen Namen ein.");
+    if (!answers.when) return hint(t("Bitte wähle einen Zeitraum."));
+    if (name.length < 2) return hint(t("Bitte gib deinen Namen ein."));
     answers.name = name;
     answers.first = name.split(/\s+/)[0];
     hint("");

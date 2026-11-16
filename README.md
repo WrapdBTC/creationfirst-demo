@@ -17,6 +17,9 @@ Was sich gegenüber der Live-Seite geändert hat:
 - **Skripte:** `assets/js/hero-demo.js` (neu), Vorschau-Rahmen am Ende von `assets/js/main.js`.
 - **Build:** `_build/build.py` kennt `DEMO=1`, den Platzhalter `{{R}}` (Pfad zur Wurzel), lädt die Schrift vor
   und bindet auf der Startseite `hero-demo.js` und `time-calculator.js` ein.
+- **Bewegung & Unterseiten:** Abschnitt „20 Bewegung“ in `style.css` und Zusätze in `main.js`: Wort-für-Wort-Überschriften,
+  automatisches Einblenden, scroll-gekoppelte Bilder und Titel, Lichtkegel auf Karten, Laufband vor dem Footer (`marquee()` in `build.py`).
+- **Demo-Betriebe mehrsprachig:** `?lang=en` bzw. `?lang=hr`; die Übersetzungen stehen als Wörterbuch im jeweiligen Skript.
 - **Lösungen-Seite:** Links zu den beiden Demos. **Buttons:** einheitlich „Erstgespräch anfragen“.
 
 Zum Übernehmen in die Live-Seite: alles außer `README.md` und `robots.txt` kopieren, `CNAME` behalten,

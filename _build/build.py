@@ -554,6 +554,14 @@ def scripts(page, lang):
                      for n in names)
 
 # ---------------------------------------------------------------- build
+MARQUEE = {"de": ["Websites", "Web-Apps", "Automatisierung", "KI-Abläufe"],
+           "en": ["Websites", "Web apps", "Automation", "AI workflows"],
+           "hr": ["Web-stranice", "Web-aplikacije", "Automatizacija", "AI procesi"]}
+def marquee(lang):
+    """Großes Laufband vor dem Footer; rein dekorativ, zweimal derselbe Inhalt für die Endlosschleife."""
+    one = "".join("<span>%s</span><i>✦</i>" % esc(w) for w in MARQUEE[lang])
+    return '<div class="big-marquee" aria-hidden="true"><div class="big-marquee-track">%s</div></div>' % (one * 2)
+
 DEMO_NOTE = {"de": "Demo-Vorschau · die Live-Seite liegt unter", "en": "Demo preview · the live site is at",
              "hr": "Demo pregled · stranica uživo nalazi se na"}
 def build_page(page, lang):
@@ -566,7 +574,7 @@ def build_page(page, lang):
     parts = [head(page, lang, main), "<body>", sprite(), demo_bar,
              '<div class="scroll-progress" aria-hidden="true"></div>',
              '<a class="skip-link" href="#main">%s</a>' % esc(t["skip"]), "",
-             hdr, "", '<main id="main">', main, "</main>", "",
+             hdr, "", '<main id="main">', main, "</main>", "", marquee(lang), "",
              ftr, "", flt, "", scripts(page, lang), "</body>", "</html>", ""]
     return "\n".join(line.rstrip() for part in parts for line in part.split("\n"))
 

@@ -154,6 +154,47 @@
     document.querySelectorAll(".faq-item.is-open .faq-a").forEach(function (a) { a.style.maxHeight = a.scrollHeight + "px"; });
   }, { passive: true });
 
+  /* Auto-Reveal: Bausteine ohne data-reveal bekommen es automatisch, damit jede Seite gleich lebendig ist */
+  if (!reduceMotion) {
+    var AUTO = ".section-head, .usp-card, .card, .service-block, .portfolio-card, .process-step, .faq-item, .cta-band, " +
+      ".closing-panel, .section-figure, .price-card, .entry-card, .personal-grid > *, .service-paths > *, .case-layout > *, " +
+      ".process-strip > li, .compact-faq > *, .contact-info-row, .trust-bar-chips > *, .privacy-promise, .offer-teaser, " +
+      ".example-jumps, .case-heading, .showcase-card, .form-card, .contact-form";
+    document.querySelectorAll(AUTO).forEach(function (el) {
+      if (el.hasAttribute("data-reveal") || el.querySelector("[data-reveal]")) return;
+      if (el.parentElement && el.parentElement.closest("[data-reveal]")) return;
+      if (el.closest(".hero, .page-hero, .studio-hero")) return;
+      el.setAttribute("data-reveal", "");
+    });
+
+    /* Überschrift im Unterseiten-Hero Wort für Wort aufbauen (Vorlesetext bleibt über aria-label ganz) */
+    var splitH1 = document.querySelector(".hero h1, .page-hero h1, .studio-hero.compact h1");
+    if (splitH1) {
+      splitH1.setAttribute("aria-label", splitH1.textContent.replace(/\s+/g, " ").trim());
+      var wordIndex = 0;
+      (function walk(node) {
+        Array.prototype.slice.call(node.childNodes).forEach(function (n) {
+          if (n.nodeType === 3) {
+            var frag = document.createDocumentFragment();
+            n.textContent.split(/(\s+)/).forEach(function (part) {
+              if (!part) return;
+              if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(" ")); return; }
+              var w = document.createElement("span");
+              w.className = "split-word";
+              w.setAttribute("aria-hidden", "true");
+              w.style.setProperty("--i", String(wordIndex++));
+              w.textContent = part;
+              frag.appendChild(w);
+            });
+            node.replaceChild(frag, n);
+          } else if (n.nodeType === 1 && n.tagName !== "BR") {
+            walk(n);
+          }
+        });
+      })(splitH1);
+    }
+  }
+
   /* Reveal on scroll, staggered per group of siblings */
   var revealEls = document.querySelectorAll("[data-reveal]");
   if ("IntersectionObserver" in window && revealEls.length && !reduceMotion) {
@@ -456,4 +497,27 @@
     frames.forEach(fit);
     window.addEventListener("resize", function () { frames.forEach(fit); });
   }
+})();
+
+/* Lichtkegel: Karten und Unterseiten-Heros folgen dem Mauszeiger (nur mit Maus, nicht bei reduzierter Bewegung). */
+(function () {
+  "use strict";
+  var mm = window.matchMedia;
+  if (!mm || !mm("(pointer: fine)").matches || mm("(prefers-reduced-motion: reduce)").matches) return;
+  function track(el, xVar, yVar) {
+    el.addEventListener("pointermove", function (e) {
+      var r = el.getBoundingClientRect();
+      el.style.setProperty(xVar, (e.clientX - r.left).toFixed(0) + "px");
+      el.style.setProperty(yVar, (e.clientY - r.top).toFixed(0) + "px");
+    });
+    el.addEventListener("pointerleave", function () {
+      el.style.removeProperty(xVar);
+      el.style.removeProperty(yVar);
+    });
+  }
+  document.querySelectorAll(".card, .usp-card, .process-step, .price-card, .entry-card, .portfolio-card, .example-tile, .showcase-card, .closing-panel").forEach(function (el) {
+    el.classList.add("spot");
+    track(el, "--mx", "--my");
+  });
+  document.querySelectorAll(".hero, .page-hero, .studio-hero.compact").forEach(function (el) { track(el, "--hx", "--hy"); });
 })();

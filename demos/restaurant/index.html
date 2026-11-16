@@ -23,6 +23,8 @@ button { font: inherit; cursor: pointer; }
 .demo-bar { background: #1b1f3a; color: #e8eaf6; font-size: 13px; padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 4px 16px; justify-content: center; text-align: center; }
 .demo-bar a { color: #fff; font-weight: 700; }
 .is-preview .demo-bar { display: none; }
+.demo-bar .langs a { font-weight: 600; text-decoration: none; opacity: .75; }
+.demo-bar .langs a[aria-current] { opacity: 1; text-decoration: underline; text-underline-offset: 3px; }
 
 .top { position: sticky; top: 0; z-index: 10; background: rgba(246, 240, 228, .92); backdrop-filter: blur(10px); border-bottom: 1px solid var(--line); }
 .top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 68px; }
@@ -130,6 +132,7 @@ footer b { color: var(--cream); font-family: var(--serif); font-size: 1.2rem; fo
 <div class="demo-bar">
   <span>Demo von CreationFirst · Gasthaus Linde ist ein erfundener Betrieb, es wird nichts gesendet.</span>
   <a href="../../index.html">← Zurück zu CreationFirst</a>
+  <span class="langs"><a href="./" data-lang="de">DE</a> · <a href="?lang=en" data-lang="en">EN</a> · <a href="?lang=hr" data-lang="hr">HR</a></span>
 </div>
 
 <header class="top">
@@ -270,10 +273,330 @@ footer b { color: var(--cream); font-family: var(--serif); font-size: 1.2rem; fo
   "use strict";
   if (/[?&]preview=1/.test(location.search)) document.documentElement.classList.add("is-preview");
 
-  var DAYS = ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"];
-  var MONTHS = ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"];
+  // Sprache: ?lang=en oder ?lang=hr. Deutsch steht im HTML, die anderen Sprachen ersetzen die Texte
+  // anhand des deutschen Wortlauts (I18N: deutscher Text -> [Englisch, Kroatisch]).
+  var LANG = (location.search.match(/[?&]lang=(en|hr)/) || [])[1] || "de";
+  var I18N = {
+   "Gasthaus Linde – Demo-Website von CreationFirst": [
+    "Gasthaus Linde – demo website by CreationFirst",
+    "Gasthaus Linde – demo web-stranica, CreationFirst"
+   ],
+   "Demo von CreationFirst · Gasthaus Linde ist ein erfundener Betrieb, es wird nichts gesendet.": [
+    "Demo by CreationFirst · Gasthaus Linde is a made-up business, nothing is sent.",
+    "Demo, CreationFirst · Gasthaus Linde je izmišljen restoran, ništa se ne šalje."
+   ],
+   "← Zurück zu CreationFirst": [
+    "← Back to CreationFirst",
+    "← Natrag na CreationFirst"
+   ],
+   "Gasthaus Linde, Startseite": [
+    "Gasthaus Linde, home",
+    "Gasthaus Linde, početna"
+   ],
+   "Hauptnavigation": [
+    "Main navigation",
+    "Glavna navigacija"
+   ],
+   "Karte": [
+    "Menu",
+    "Jelovnik"
+   ],
+   "Reservieren": [
+    "Book",
+    "Rezerviraj"
+   ],
+   "Besuch": [
+    "Visit",
+    "Posjet"
+   ],
+   "Tisch reservieren": [
+    "Book a table",
+    "Rezerviraj stol"
+   ],
+   "Musterstadt · unter der alten Linde": [
+    "Sampletown · under the old linden tree",
+    "Primjergrad · pod starom lipom"
+   ],
+   "Saisonale Küche,": [
+    "Seasonal cooking,",
+    "Sezonska kuhinja,"
+   ],
+   "lange Tische.": [
+    "long tables.",
+    "dugi stolovi."
+   ],
+   "Was der Markt hergibt, kommt bei uns auf den Teller. Dazu Wein aus der Region und Platz für alle, die gern lange sitzen bleiben.": [
+    "Whatever the market offers ends up on our plates. With wine from the region and room for everyone who likes to linger.",
+    "Što tržnica nudi, to kod nas stiže na tanjur. Uz vino iz regije i mjesta za sve koji vole dugo sjediti."
+   ],
+   "Zur Karte": [
+    "See the menu",
+    "Pogledaj jelovnik"
+   ],
+   "Diese Woche": [
+    "This week",
+    "Ovaj tjedan"
+   ],
+   "Kürbissuppe mit Kernöl": [
+    "Pumpkin soup with seed oil",
+    "Juha od bundeve s bučinim uljem"
+   ],
+   "Rinderroulade, Rotkohl, Klöße": [
+    "Beef roulade, red cabbage, dumplings",
+    "Goveđa rolada, crveni kupus, okruglice"
+   ],
+   "Pilzragout mit Serviettenknödel": [
+    "Mushroom ragout with bread dumpling",
+    "Ragu od gljiva s okruglicom od kruha"
+   ],
+   "Zwetschgenröster, Vanilleeis": [
+    "Stewed plums, vanilla ice cream",
+    "Pirjane šljive, sladoled od vanilije"
+   ],
+   "Aus der Karte": [
+    "From the menu",
+    "Iz jelovnika"
+   ],
+   "Eine kleine Auswahl. Die ganze Karte wechselt mit der Jahreszeit.": [
+    "A small selection. The full menu changes with the seasons.",
+    "Mali izbor. Cijeli jelovnik mijenja se s godišnjim dobom."
+   ],
+   "Vorweg": [
+    "To start",
+    "Za početak"
+   ],
+   "Hauptsache": [
+    "Mains",
+    "Glavna jela"
+   ],
+   "Süßes": [
+    "Sweets",
+    "Slatko"
+   ],
+   "Kürbissuppe": [
+    "Pumpkin soup",
+    "Juha od bundeve"
+   ],
+   "Kernöl, geröstete Kerne": [
+    "Seed oil, roasted seeds",
+    "Bučino ulje, pržene sjemenke"
+   ],
+   "Feldsalat": [
+    "Lamb's lettuce",
+    "Matovilac"
+   ],
+   "Speck, Kartoffeldressing, Croûtons": [
+    "Bacon, potato dressing, croutons",
+    "Slanina, preljev od krumpira, krutoni"
+   ],
+   "Rote Bete": [
+    "Beetroot",
+    "Cikla"
+   ],
+   "Ziegenfrischkäse, Walnuss, Honig": [
+    "Fresh goat's cheese, walnut, honey",
+    "Svježi kozji sir, orah, med"
+   ],
+   "Rinderroulade": [
+    "Beef roulade",
+    "Goveđa rolada"
+   ],
+   "Rotkohl, Kartoffelklöße": [
+    "Red cabbage, potato dumplings",
+    "Crveni kupus, okruglice od krumpira"
+   ],
+   "Saibling": [
+    "Char",
+    "Zlatovčica"
+   ],
+   "Rahmwirsing, Dillkartoffeln": [
+    "Creamed savoy cabbage, dill potatoes",
+    "Kelj u vrhnju, krumpir s koprom"
+   ],
+   "Pilzragout": [
+    "Mushroom ragout",
+    "Ragu od gljiva"
+   ],
+   "Serviettenknödel, Kräuter · vegetarisch": [
+    "Bread dumpling, herbs · vegetarian",
+    "Okruglica od kruha, začinsko bilje · vegetarijanski"
+   ],
+   "Zwetschgenröster": [
+    "Stewed plums",
+    "Pirjane šljive"
+   ],
+   "Vanilleeis, Butterstreusel": [
+    "Vanilla ice cream, butter crumble",
+    "Sladoled od vanilije, mrvice od maslaca"
+   ],
+   "Schokoladentarte": [
+    "Chocolate tart",
+    "Čokoladni tart"
+   ],
+   "Sauerrahm, Meersalz": [
+    "Sour cream, sea salt",
+    "Kiselo vrhnje, morska sol"
+   ],
+   "Käse vom Hof": [
+    "Farm cheese",
+    "Sir s imanja"
+   ],
+   "Drei Sorten, Feigensenf": [
+    "Three kinds, fig mustard",
+    "Tri vrste, senf od smokava"
+   ],
+   "Tag, Personen und Uhrzeit wählen. Die Bestätigung kommt sofort.": [
+    "Pick a day, party size and time. The confirmation appears straight away.",
+    "Odaberi dan, broj osoba i vrijeme. Potvrda stiže odmah."
+   ],
+   "Tag": [
+    "Day",
+    "Dan"
+   ],
+   "Personen": [
+    "Guests",
+    "Osobe"
+   ],
+   "Uhrzeit": [
+    "Time",
+    "Vrijeme"
+   ],
+   "Eine Person weniger": [
+    "One guest fewer",
+    "Jedna osoba manje"
+   ],
+   "Eine Person mehr": [
+    "One guest more",
+    "Jedna osoba više"
+   ],
+   "Auf welchen Namen?": [
+    "Under which name?",
+    "Na koje ime?"
+   ],
+   "Name für die Reservierung": [
+    "Name for the booking",
+    "Ime za rezervaciju"
+   ],
+   "So sieht es das Team · Tagesübersicht": [
+    "What the team sees · daily overview",
+    "Što vidi tim · dnevni pregled"
+   ],
+   "Das ist eine Demo: Es wurde nichts gesendet und nichts gespeichert.": [
+    "This is a demo: nothing was sent and nothing was stored.",
+    "Ovo je demo: ništa nije poslano niti spremljeno."
+   ],
+   "Noch eine Reservierung": [
+    "Another booking",
+    "Još jedna rezervacija"
+   ],
+   "Öffnungszeiten": [
+    "Opening hours",
+    "Radno vrijeme"
+   ],
+   "Mittwoch bis Sonntag": [
+    "Wednesday to Sunday",
+    "Od srijede do nedjelje"
+   ],
+   "17:30 bis 23:00 Uhr": [
+    "5:30 pm to 11 pm",
+    "17:30 do 23:00"
+   ],
+   "Montag und Dienstag Ruhetag": [
+    "Closed on Monday and Tuesday",
+    "Ponedjeljkom i utorkom zatvoreno"
+   ],
+   "Feiern": [
+    "Celebrations",
+    "Proslave"
+   ],
+   "Der Nebenraum fasst bis zu 28 Gäste. Für Geburtstage und Firmenessen stellen wir gern ein Menü zusammen.": [
+    "The private room seats up to 28 guests. We are happy to put together a menu for birthdays and company dinners.",
+    "Zasebna sala prima do 28 gostiju. Za rođendane i poslovne večere rado slažemo meni."
+   ],
+   "Anfahrt": [
+    "Getting here",
+    "Dolazak"
+   ],
+   "Parkplätze direkt am Haus": [
+    "Parking right at the house",
+    "Parkiralište uz restoran"
+   ],
+   "Erfundener Beispielbetrieb, gebaut von CreationFirst.": [
+    "A made-up example business, built by CreationFirst.",
+    "Izmišljen restoran kao primjer, izradio CreationFirst."
+   ],
+   "So eine Buchung für meinen Betrieb →": [
+    "A booking like this for my business →",
+    "Ovakve rezervacije za moje poslovanje →"
+   ],
+   "2 Personen": [
+    "2 guests",
+    "2 osobe"
+   ]
+  };
+  function t(s) {
+    if (LANG === "de") return s;
+    var e = I18N[s];
+    return e ? e[LANG === "en" ? 0 : 1] : s;
+  }
+  (function () {
+    var bar = document.querySelector(".demo-bar .langs");
+    if (bar) {
+      var keep = /[?&]preview=1/.test(location.search) ? "preview=1&" : "";
+      bar.querySelectorAll("a").forEach(function (a) {
+        var l = a.getAttribute("data-lang");
+        a.setAttribute("href", l === "de" ? (keep ? "?preview=1" : "./") : "?" + keep + "lang=" + l);
+        if (l === LANG) a.setAttribute("aria-current", "true");
+      });
+    }
+    if (LANG === "de") return;
+    document.documentElement.lang = LANG;
+    document.title = t(document.title);
+    var walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    var nodes = [];
+    while (walker.nextNode()) nodes.push(walker.currentNode);
+    nodes.forEach(function (n) {
+      var p = n.parentNode && n.parentNode.nodeName;
+      if (p === "SCRIPT" || p === "STYLE") return;
+      var key = n.nodeValue.replace(/\s+/g, " ").trim();
+      if (key && I18N[key]) n.nodeValue = n.nodeValue.replace(n.nodeValue.trim(), t(key));
+    });
+    ["placeholder", "aria-label"].forEach(function (attr) {
+      document.querySelectorAll("[" + attr + "]").forEach(function (el) { el.setAttribute(attr, t(el.getAttribute(attr))); });
+    });
+    var home = { en: "../../en/index.html", hr: "../../hr/index.html" }[LANG];
+    var contact = { en: "../../en/contact.html", hr: "../../hr/kontakt.html" }[LANG];
+    document.querySelectorAll('a[href^="../../"]').forEach(function (a) {
+      var h = a.getAttribute("href");
+      if (h.indexOf("../../index.html") === 0) a.setAttribute("href", home);
+      else if (h.indexOf("../../kontakt.html") === 0) a.setAttribute("href", contact + h.slice("../../kontakt.html".length));
+    });
+  })();
+
+  var STR = {
+    de: { days: ["So", "Mo", "Di", "Mi", "Do", "Fr", "Sa"], months: ["Jan", "Feb", "Mär", "Apr", "Mai", "Jun", "Jul", "Aug", "Sep", "Okt", "Nov", "Dez"],
+          closed: "Ruhetag", full: "ausgebucht", one: "Person", many: "Personen", clock: " Uhr", pers: " Pers.", isNew: " · neu",
+          needTime: "Bitte wähle eine Uhrzeit.", needName: "Bitte gib einen Namen für die Reservierung ein.", regulars: "Stammtisch",
+          date: function (d) { return this.days[d.getDay()] + ", " + d.getDate() + ". " + this.months[d.getMonth()]; },
+          title: function (day, first) { return "Bis " + day + ", " + first + "!"; },
+          text: function (guests, date, time) { return "Tisch für " + guests + " am " + date + " um " + time + " Uhr ist vorgemerkt."; } },
+    en: { days: ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"], months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+          closed: "Closed", full: "fully booked", one: "guest", many: "guests", clock: "", pers: " guests", isNew: " · new",
+          needTime: "Please choose a time.", needName: "Please enter a name for the booking.", regulars: "Regulars' table",
+          date: function (d) { return this.days[d.getDay()] + ", " + d.getDate() + " " + this.months[d.getMonth()]; },
+          title: function (day, first) { return "See you on " + day + ", " + first + "!"; },
+          text: function (guests, date, time) { return "A table for " + guests + " on " + date + " at " + time + " is held for you."; } },
+    hr: { days: ["ned", "pon", "uto", "sri", "čet", "pet", "sub"], months: ["sij", "velj", "ožu", "tra", "svi", "lip", "srp", "kol", "ruj", "lis", "stu", "pro"],
+          closed: "Zatvoreno", full: "popunjeno", one: "osoba", many: "osoba", clock: " h", pers: " os.", isNew: " · novo",
+          needTime: "Odaberi vrijeme.", needName: "Upiši ime za rezervaciju.", regulars: "Stalni gosti",
+          date: function (d) { return this.days[d.getDay()] + ", " + d.getDate() + ". " + this.months[d.getMonth()]; },
+          title: function (day, first) { return "Vidimo se, " + first + "!"; },
+          text: function (guests, date, time) { return "Stol za " + guests + ", " + date + " u " + time + " h, zabilježen je."; } }
+  }[LANG];
+  var DAYS = STR.days;
+  var MONTHS = STR.months;
   var TIMES = ["17:30", "18:00", "18:30", "19:00", "19:30", "20:00", "20:30", "21:00"];
-  var OTHER_GUESTS = ["Fam. Becker", "Hr. Aydin", "Fr. Lorenz", "Stammtisch", "Fr. Novak", "Hr. Peters"];
+  var OTHER_GUESTS = ["Fam. Becker", "Hr. Aydin", "Fr. Lorenz", STR.regulars, "Fr. Novak", "Hr. Peters"];
 
   var daysEl = document.getElementById("days");
   var slotsEl = document.getElementById("slots");
@@ -288,7 +611,7 @@ footer b { color: var(--cream); font-family: var(--serif); font-size: 1.2rem; fo
   function busy(date, time) {
     return (date.getDate() * 5 + TIMES.indexOf(time) * 3) % 7 < 2;
   }
-  function label(date) { return DAYS[date.getDay()] + ", " + date.getDate() + ". " + MONTHS[date.getMonth()]; }
+  function label(date) { return STR.date(date); }
 
   function renderDays() {
     var today = new Date();
@@ -301,9 +624,9 @@ footer b { color: var(--cream); font-family: var(--serif); font-size: 1.2rem; fo
       btn.type = "button";
       btn.className = "day";
       btn.setAttribute("aria-pressed", "false");
-      btn.setAttribute("aria-label", label(d) + (closed ? ", Ruhetag" : ""));
+      btn.setAttribute("aria-label", label(d) + (closed ? ", " + STR.closed : ""));
       btn.disabled = closed;
-      btn.innerHTML = "<small>" + DAYS[d.getDay()] + "</small><b>" + d.getDate() + "</b><small>" + (closed ? "Ruhetag" : MONTHS[d.getMonth()]) + "</small>";
+      btn.innerHTML = "<small>" + DAYS[d.getDay()] + "</small><b>" + d.getDate() + "</b><small>" + (closed ? STR.closed : MONTHS[d.getMonth()]) + "</small>";
       (function (date, el) {
         el.addEventListener("click", function () { selectDay(date, el); });
       })(d, btn);
@@ -329,7 +652,7 @@ footer b { color: var(--cream); font-family: var(--serif); font-size: 1.2rem; fo
       btn.textContent = t;
       btn.disabled = full;
       btn.setAttribute("aria-pressed", "false");
-      if (full) btn.setAttribute("aria-label", t + " Uhr, ausgebucht");
+      if (full) btn.setAttribute("aria-label", t + STR.clock + ", " + STR.full);
       btn.addEventListener("click", function () {
         state.time = t;
         hintEl.textContent = "";
@@ -339,9 +662,14 @@ footer b { color: var(--cream); font-family: var(--serif); font-size: 1.2rem; fo
     });
   }
 
+  // Kroatisch: 2–4 "osobe", sonst "osoba" (12–14 wieder "osoba").
+  function guestWord(n) {
+    if (LANG === "hr") return (n % 10 >= 2 && n % 10 <= 4 && (n < 12 || n > 14)) ? "osobe" : "osoba";
+    return n === 1 ? STR.one : STR.many;
+  }
   function setGuests(n) {
     state.guests = Math.max(1, Math.min(12, n));
-    guestsEl.textContent = state.guests + (state.guests === 1 ? " Person" : " Personen");
+    guestsEl.textContent = state.guests + " " + guestWord(state.guests);
     state.time = null;
     renderSlots();
   }
@@ -350,12 +678,12 @@ footer b { color: var(--cream); font-family: var(--serif); font-size: 1.2rem; fo
 
   document.getElementById("reserve").addEventListener("click", function () {
     var name = nameEl.value.trim();
-    if (!state.time) { hintEl.textContent = "Bitte wähle eine Uhrzeit."; return; }
-    if (name.length < 2) { hintEl.textContent = "Bitte gib einen Namen für die Reservierung ein."; nameEl.focus(); return; }
+    if (!state.time) { hintEl.textContent = STR.needTime; return; }
+    if (name.length < 2) { hintEl.textContent = STR.needName; nameEl.focus(); return; }
     hintEl.textContent = "";
     var first = name.split(/\s+/)[0];
-    document.getElementById("c-title").textContent = "Bis " + DAYS[state.day.getDay()] + ", " + first + "!";
-    document.getElementById("c-text").textContent = "Tisch für " + guestsEl.textContent + " am " + label(state.day) + " um " + state.time + " Uhr ist vorgemerkt.";
+    document.getElementById("c-title").textContent = STR.title(DAYS[state.day.getDay()], first);
+    document.getElementById("c-text").textContent = STR.text(guestsEl.textContent, label(state.day), state.time);
 
     var rows = TIMES.filter(function (t) { return busy(state.day, t); }).map(function (t, i) {
       return { time: t, who: OTHER_GUESTS[i % OTHER_GUESTS.length], n: 2 + (i * 3) % 5, isNew: false };
@@ -367,7 +695,7 @@ footer b { color: var(--cream); font-family: var(--serif); font-size: 1.2rem; fo
     rows.forEach(function (r) {
       var tr = document.createElement("tr");
       if (r.isNew) tr.className = "new";
-      [r.time + " Uhr", r.who, r.n + " Pers." + (r.isNew ? " · neu" : "")].forEach(function (text) {
+      [r.time + STR.clock, r.who, r.n + STR.pers + (r.isNew ? STR.isNew : "")].forEach(function (text) {
         var td = document.createElement("td");
         td.textContent = text;
         tr.appendChild(td);
