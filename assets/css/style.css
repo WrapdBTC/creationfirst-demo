@@ -1746,22 +1746,6 @@ html:not(.js) [data-reveal] { opacity: 1; transform: none; filter: none; }
 .card:hover, .usp-card:hover, .price-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
 .card-icon { transition: transform .35s var(--ease-out); }
 
-/* Scroll-gekoppelt (nur wo der Browser es kann): Bilder driften, Abschnittstitel füllen sich */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .service-visual img, .section-figure img, .page-hero-visual img {
-      animation: imgDrift linear both; animation-timeline: view(); animation-range: entry 0% exit 100%;
-    }
-    .section-head h2 {
-      background: linear-gradient(90deg, currentColor 0%, currentColor 46%, color-mix(in srgb, currentColor 24%, transparent) 54%, color-mix(in srgb, currentColor 24%, transparent) 100%) 100% 0 / 220% 100% no-repeat;
-      -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-      animation: titleFill linear both; animation-timeline: view(); animation-range: entry 15% cover 38%;
-    }
-  }
-}
-@keyframes imgDrift { from { transform: scale(1.16) translateY(-6%); } to { transform: scale(1.16) translateY(6%); } }
-@keyframes titleFill { to { background-position: 0 0; } }
-
 /* Laufband vor dem Footer */
 .big-marquee { overflow: hidden; padding: clamp(22px, 3vw, 40px) 0; border-top: 1px solid var(--color-border); background: var(--color-bg); }
 .big-marquee-track { display: flex; width: max-content; animation: marquee 46s linear infinite; }
@@ -1775,4 +1759,81 @@ html:not(.js) [data-reveal] { opacity: 1; transform: none; filter: none; }
   .split-word { animation: none; opacity: 1; transform: none; filter: none; }
   [data-reveal] { opacity: 1; transform: none; filter: none; }
   .big-marquee-track { animation: none; }
+}
+
+/* 21 Scroll-Effekte: an die Scroll-Position gekoppelt, gesteuert von main.js (Klasse .scrollfx auf <html>).
+   Ohne JavaScript oder bei „Bewegung reduzieren“ greift nichts davon und alles ist normal sichtbar. */
+
+/* Abschnittstitel leuchten Wort für Wort auf */
+.scrollfx .sw { opacity: .18; transition: opacity .35s ease; }
+.scrollfx .sw.on { opacity: 1; }
+
+/* Unterseiten-Hero zieht sich beim Wegscrollen zurück */
+.scrollfx .hero > .container, .scrollfx .page-hero > .container, .scrollfx .studio-hero.compact > .container {
+  transform: translate3d(0, calc(var(--sp, 0) * 110px), 0) scale(calc(1 - var(--sp, 0) * .07));
+  opacity: calc(1 - var(--sp, 0) * 1.25); transform-origin: 50% 0; will-change: transform, opacity;
+}
+.scrollfx .hero::before, .scrollfx .page-hero::before { transform: translate3d(0, calc(var(--sp, 0) * 60px), 0); }
+
+/* Startseite: das Simulationsfenster richtet sich beim Scrollen auf */
+.scrollfx .next-hero .live-demo { transform: perspective(1400px) rotateX(calc(var(--tilt, 0) * 7deg)) translateY(calc(var(--tilt, 0) * 26px)); transform-origin: 50% 100%; }
+
+/* Bilder wachsen ins Bild, der Inhalt zoomt dagegen */
+.scrollfx .service-visual, .scrollfx .section-figure, .scrollfx .founder-photo, .scrollfx .case-visual > img {
+  transform: scale(calc(.84 + var(--ip, 1) * .16)); opacity: calc(.35 + var(--ip, 1) * .65); will-change: transform;
+}
+.scrollfx .service-visual img, .scrollfx .section-figure img { transform: scale(calc(1.28 - var(--ip, 1) * .28)); will-change: transform; }
+
+/* Ablauf: Linie zeichnet sich, Schritte schalten sich nacheinander ein */
+.process-strip { position: relative; }
+.scrollfx .process-strip::before { content: ""; position: absolute; left: 0; right: 0; top: -1px; height: 3px; border-radius: 3px; background: var(--gradient-brand); transform-origin: left; transform: scaleX(var(--p, 0)); z-index: 1; }
+.scrollfx .process-strip li { opacity: .35; transform: translateY(14px); transition: opacity .45s ease, transform .45s var(--ease-out); }
+.scrollfx .process-strip li.is-on { opacity: 1; transform: none; }
+.scrollfx .process-strip li .step-price { transform: scale(.9); transform-origin: left; transition: transform .45s var(--ease-out) .1s; }
+.scrollfx .process-strip li.is-on .step-price { transform: none; }
+
+/* Karten-Raster: Karten fächern sich beim Hereinscrollen auf */
+.scrollfx .grid > .usp-card, .scrollfx .grid > .card, .scrollfx .grid > .process-step, .scrollfx .service-paths > a {
+  transform: translate3d(calc((1 - var(--gp, 1)) * var(--gx, 0px)), calc((1 - var(--gp, 1)) * 70px), 0) rotate(calc((1 - var(--gp, 1)) * var(--gr, 0deg)));
+  opacity: calc(.15 + var(--gp, 1) * .85);
+}
+.scrollfx .grid > [data-reveal], .scrollfx .service-paths > [data-reveal] { filter: none; transition: none; }
+
+/* Beispiele: Abschnitt bleibt stehen, die Karten laufen quer durchs Bild */
+.hscroll-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 24px; margin-bottom: 28px; }
+.hscroll-head .section-head { margin: 0; }
+.hscroll-hint { margin: 0 0 6px; font-size: .82rem; font-weight: 650; color: var(--color-text-soft); white-space: nowrap; display: none; }
+.hscroll-hint span { display: inline-block; animation: hintNudge 1.4s ease-in-out infinite; }
+@keyframes hintNudge { 50% { transform: translateX(6px); } }
+.hscroll-track { display: flex; gap: clamp(16px, 2.4vw, 32px); padding: 4px var(--gutter) 12px; overflow-x: auto; scroll-snap-type: x mandatory; -webkit-overflow-scrolling: touch; scrollbar-width: none; }
+.hscroll-track::-webkit-scrollbar { display: none; }
+.hscroll-track .showcase-card { flex: 0 0 min(86vw, 560px); scroll-snap-align: center; }
+.showcase-end { display: flex; align-items: center; background: var(--color-primary-soft); border-style: dashed; }
+.showcase-end .showcase-body { display: grid; gap: 12px; justify-items: start; }
+.showcase-end h3 { font-size: clamp(1.8rem, 3vw, 2.6rem); margin: 0; }
+.showcase-end .btn { position: relative; z-index: 2; }
+.showcase-end .text-link { position: relative; z-index: 2; margin: 0; }
+.hscroll-progress { display: none; }
+.hscroll.hscroll-on { padding: 0; }
+.hscroll-on .hscroll-sticky { position: sticky; top: var(--header-h); height: calc(100vh - var(--header-h)); height: calc(100svh - var(--header-h)); display: flex; flex-direction: column; justify-content: center; overflow: hidden; }
+.hscroll-on .hscroll-hint { display: block; }
+.hscroll-on .hscroll-track { overflow: visible; scroll-snap-type: none; width: max-content; will-change: transform; padding-right: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))); padding-left: max(var(--gutter), calc((100vw - var(--container)) / 2 + var(--gutter))); }
+.hscroll-on .hscroll-track .showcase-card { flex: 0 0 clamp(380px, calc((100svh - var(--header-h) - 470px) * 1.6), 800px); }
+.hscroll-on .showcase-end { flex-basis: clamp(320px, 30vw, 460px) !important; }
+.hscroll-on .hscroll-progress { display: block; width: min(320px, 40vw); height: 3px; border-radius: 3px; background: var(--color-border); margin: 22px auto 0; overflow: hidden; }
+.hscroll-on .hscroll-progress i { display: block; height: 100%; background: var(--gradient-brand); transform-origin: left; transform: scaleX(var(--hp, 0)); }
+
+/* Laufband folgt der Scroll-Richtung */
+.scrollfx .big-marquee-track { animation: none; will-change: transform; }
+
+@media (max-width: 760px) {
+  /* Auf dem Handy stehen die Karten untereinander: nur von unten einfahren, kein seitlicher Versatz */
+  .scrollfx .grid > .usp-card, .scrollfx .grid > .card, .scrollfx .grid > .process-step, .scrollfx .service-paths > a {
+    transform: translate3d(0, calc((1 - var(--gp, 1)) * 40px), 0);
+  }
+  .scrollfx .process-strip::before { display: none; }
+  .hscroll-head { display: block; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hscroll-hint span { animation: none; }
 }

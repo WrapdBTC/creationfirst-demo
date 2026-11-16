@@ -10,7 +10,7 @@ Was sich gegenüber der Live-Seite geändert hat:
 
 - **Startseite (DE/EN/HR):** Hero mit Live-Simulation, Branchenleiste, zwei Demo-Betriebe als Vorschau,
   Zeitrechner, Preis-Hinweise im Ablauf. Quellen: `_build/src/<sprache>/home.html`.
-- **Demo-Betriebe:** `demos/elektro/` (geführte Anfrage) und `demos/restaurant/` (Tischreservierung).
+- **Beispiele:** `demos/elektro/` (geführte Anfrage), `demos/restaurant/` (Tischreservierung) und `demos/makler/` (Posteingang mit vorbereiteten Antworten).
   Eigenständige Seiten, nicht Teil des Builds, immer `noindex`, erfundene Betriebe, es wird nichts gesendet.
 - **Schrift:** Bricolage Grotesque (SIL OFL), selbst gehostet in `assets/fonts/`, für alle Überschriften.
 - **Styles:** Abschnitt „19 Next“ am Ende von `assets/css/style.css`.
@@ -19,7 +19,9 @@ Was sich gegenüber der Live-Seite geändert hat:
   und bindet auf der Startseite `hero-demo.js` und `time-calculator.js` ein.
 - **Bewegung & Unterseiten:** Abschnitt „20 Bewegung“ in `style.css` und Zusätze in `main.js`: Wort-für-Wort-Überschriften,
   automatisches Einblenden, scroll-gekoppelte Bilder und Titel, Lichtkegel auf Karten, Laufband vor dem Footer (`marquee()` in `build.py`).
-- **Demo-Betriebe mehrsprachig:** `?lang=en` bzw. `?lang=hr`; die Übersetzungen stehen als Wörterbuch im jeweiligen Skript.
+- **Scroll-Effekte:** Abschnitt „21 Scroll-Effekte“ in `style.css`, gesteuert vom letzten Block in `main.js`: Quer-Galerie der Beispiele,
+  Titel leuchten Wort für Wort auf, Hero zieht sich zurück, Bilder wachsen ins Bild, Karten fächern auf, Ablauf zeichnet sich.
+- **Beispiele mehrsprachig:** `?lang=en` bzw. `?lang=hr`; die Übersetzungen stehen als Wörterbuch im jeweiligen Skript.
 - **Lösungen-Seite:** Links zu den beiden Demos. **Buttons:** einheitlich „Erstgespräch anfragen“.
 
 Zum Übernehmen in die Live-Seite: alles außer `README.md` und `robots.txt` kopieren, `CNAME` behalten,
