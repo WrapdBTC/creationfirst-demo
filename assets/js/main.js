@@ -442,3 +442,18 @@
     update();
   })();
 })();
+
+/* Vorschau-Rahmen: iframe mit fester Größe (1280 x 800) auf die Breite des Rahmens skalieren. */
+(function () {
+  "use strict";
+  var frames = document.querySelectorAll("[data-scale-frame]");
+  if (!frames.length) return;
+  function fit(el) { el.style.setProperty("--frame-scale", String(el.clientWidth / 1280)); }
+  if ("ResizeObserver" in window) {
+    var ro = new ResizeObserver(function (entries) { entries.forEach(function (e) { fit(e.target); }); });
+    frames.forEach(function (el) { fit(el); ro.observe(el); });
+  } else {
+    frames.forEach(fit);
+    window.addEventListener("resize", function () { frames.forEach(fit); });
+  }
+})();

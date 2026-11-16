@@ -1,16 +1,26 @@
-# CreationFirst – Demo der neuen Startseite
+# CreationFirst – Demo der neuen Seite
 
-Vorschau, **nicht** die Live-Seite. Kopie von `WrapdBTC/creationfirst` mit neuer Startseite (`index.html`).
+Vorschau, **nicht** die Live-Seite. Kopie von `WrapdBTC/creationfirst` mit dem Umbau.
 Ohne `CNAME`, alle Seiten auf `noindex`, `robots.txt` sperrt Suchmaschinen.
 
-Neu gegenüber der Live-Seite (nur deutsche Startseite):
+Gebaut mit `DEMO=1 python3 _build/build.py` (setzt `noindex` und die Hinweisleiste oben).
+Für die Live-Seite ohne `DEMO=1` bauen.
 
-- `assets/css/home-next.css`: Hero, Live-Simulation, Branchenleiste, Zeitrechner-Band
-- `assets/js/hero-demo.js`: Live-Simulation im Hero (drei Beispielbetriebe, Freigabe per Klick)
-- `index.html`: neuer `<main>`-Inhalt; Leistungen und Lösungen zusammengelegt, Zeitrechner eingebaut
+Was sich gegenüber der Live-Seite geändert hat:
 
-Zum Übernehmen in die Live-Seite: die zwei neuen Dateien kopieren und den `<main>`-Inhalt nach
-`_build/src/de/home.html` übertragen (dort gilt der Build, siehe unten).
+- **Startseite (DE/EN/HR):** Hero mit Live-Simulation, Branchenleiste, zwei Demo-Betriebe als Vorschau,
+  Zeitrechner, Preis-Hinweise im Ablauf. Quellen: `_build/src/<sprache>/home.html`.
+- **Demo-Betriebe:** `demos/elektro/` (geführte Anfrage) und `demos/restaurant/` (Tischreservierung).
+  Eigenständige Seiten, nicht Teil des Builds, immer `noindex`, erfundene Betriebe, es wird nichts gesendet.
+- **Schrift:** Bricolage Grotesque (SIL OFL), selbst gehostet in `assets/fonts/`, für alle Überschriften.
+- **Styles:** Abschnitt „19 Next“ am Ende von `assets/css/style.css`.
+- **Skripte:** `assets/js/hero-demo.js` (neu), Vorschau-Rahmen am Ende von `assets/js/main.js`.
+- **Build:** `_build/build.py` kennt `DEMO=1`, den Platzhalter `{{R}}` (Pfad zur Wurzel), lädt die Schrift vor
+  und bindet auf der Startseite `hero-demo.js` und `time-calculator.js` ein.
+- **Lösungen-Seite:** Links zu den beiden Demos. **Buttons:** einheitlich „Erstgespräch anfragen“.
+
+Zum Übernehmen in die Live-Seite: alles außer `README.md` und `robots.txt` kopieren, `CNAME` behalten,
+dann `python3 _build/build.py` (ohne `DEMO=1`) ausführen.
 
 ---
 
