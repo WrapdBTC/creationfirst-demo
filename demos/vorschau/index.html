@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vorschau – CreationFirst</title>
+<meta name="description" content="Vorschau einer Beispielseite mit deinem Firmennamen. Gebaut von CreationFirst.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/svg+xml" href="../../assets/images/favicon.svg">
+<style>
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 200 800; font-display: swap; src: url("../../assets/fonts/bricolage-grotesque-latin.woff2") format("woff2"); }
+@font-face { font-family: "Bricolage Grotesque"; font-weight: 200 800; font-display: swap; src: url("../../assets/fonts/bricolage-grotesque-latin-ext.woff2") format("woff2"); unicode-range: U+0100-02BA, U+1E00-1E9F; }
+:root { --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; --grotesk: "Bricolage Grotesque", var(--sans); --serif: "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif; }
+/* Fünf Branchen-Looks: nur Farben und Schrift wechseln, der Aufbau bleibt gleich. */
+body[data-branch="handwerk"] { --bg: #111; --ink: #fff; --muted: #c9c5b8; --accent: #ffb703; --on-accent: #111; --panel: #1c1c1c; --line: #333; --display: var(--grotesk); --weight: 800; --radius: 12px; }
+body[data-branch="gastro"] { --bg: #1f3a2d; --ink: #f6f0e4; --muted: #cfc8b4; --accent: #d9b877; --on-accent: #1f3a2d; --panel: #284a3a; --line: #3a5c4b; --display: var(--serif); --weight: 500; --radius: 999px; }
+body[data-branch="praxis"] { --bg: #f3f8f7; --ink: #12302c; --muted: #50706b; --accent: #0f766e; --on-accent: #fff; --panel: #fff; --line: #d3e4e1; --display: var(--grotesk); --weight: 700; --radius: 14px; }
+body[data-branch="immo"] { --bg: #101a2c; --ink: #f3efe6; --muted: #b9c0cf; --accent: #c9a45c; --on-accent: #101a2c; --panel: #18253d; --line: #2a3a58; --display: var(--serif); --weight: 500; --radius: 6px; }
+body[data-branch="service"] { --bg: #fff; --ink: #14162b; --muted: #555a75; --accent: #4f46e5; --on-accent: #fff; --panel: #f4f5fb; --line: #e1e4f0; --display: var(--grotesk); --weight: 800; --radius: 12px; }
+
+*, *::before, *::after { box-sizing: border-box; }
+body { margin: 0; font-family: var(--sans); font-size: 17px; line-height: 1.55; color: var(--ink); background: var(--bg); -webkit-font-smoothing: antialiased; transition: background-color .45s ease, color .45s ease; }
+h1, h2, h3, p { margin: 0; }
+h1, h2, h3, .logo { font-family: var(--display); font-weight: var(--weight); letter-spacing: -.02em; line-height: 1.05; text-wrap: balance; }
+a { color: inherit; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 clamp(18px, 4vw, 44px); }
+
+.demo-bar { background: #1b1f3a; color: #e8eaf6; font-size: 13px; padding: 8px 16px; display: flex; flex-wrap: wrap; gap: 4px 16px; justify-content: center; text-align: center; }
+.demo-bar a { color: #fff; font-weight: 700; }
+.is-preview .demo-bar { display: none; }
+
+.top .wrap { display: flex; align-items: center; justify-content: space-between; gap: 18px; height: 76px; }
+.logo { display: flex; align-items: center; gap: 12px; font-size: 1.3rem; min-width: 0; }
+.logo i { font-style: normal; display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0; border-radius: var(--radius); background: var(--accent); color: var(--on-accent); font-family: var(--grotesk); font-weight: 800; font-size: .95rem; letter-spacing: 0; transition: background-color .45s ease, border-radius .45s ease; }
+.logo span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.top nav { display: flex; gap: 26px; font-size: 15px; color: var(--muted); }
+.btn { display: inline-flex; align-items: center; justify-content: center; min-height: 48px; padding: 12px 24px; border-radius: var(--radius); background: var(--accent); color: var(--on-accent); font-weight: 700; text-decoration: none; white-space: nowrap; transition: background-color .45s ease, border-radius .45s ease; }
+.top .btn { min-height: 42px; padding: 9px 18px; font-size: 15px; }
+
+.hero { position: relative; overflow: hidden; }
+.hero .wrap { padding-top: clamp(40px, 7vw, 96px); padding-bottom: clamp(48px, 8vw, 110px); position: relative; }
+.hero::after { content: ""; position: absolute; right: -8%; top: -20%; width: 46%; aspect-ratio: 1; border-radius: 50%; background: var(--accent); opacity: .16; transition: background-color .45s ease; }
+body[data-branch="handwerk"] .hero::after { border-radius: 0; clip-path: polygon(0 0, 100% 0, 100% 100%, 38% 100%); opacity: .9; right: 0; top: 0; width: 34%; height: 100%; aspect-ratio: auto; }
+body[data-branch="immo"] .hero::after { border-radius: 0; width: 30%; right: 6%; top: 12%; aspect-ratio: 3 / 4; background: none; border: 1px solid var(--accent); opacity: .6; }
+.kicker { display: inline-block; font-size: 13px; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--accent); margin-bottom: 20px; }
+.hero h1 { font-size: clamp(2.6rem, 7vw, 5.6rem); max-width: 11em; position: relative; z-index: 1; }
+.hero p { margin: 24px 0 32px; max-width: 32em; font-size: clamp(1.05rem, 1.6vw, 1.25rem); color: var(--muted); position: relative; z-index: 1; }
+.hero .btn { position: relative; z-index: 1; }
+.swap { animation: swap .45s ease both; }
+@keyframes swap { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: none; } }
+
+.services { padding: clamp(40px, 6vw, 80px) 0; border-top: 1px solid var(--line); }
+.services h2 { font-size: clamp(1.7rem, 3.4vw, 2.6rem); margin-bottom: 26px; }
+.cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: calc(min(var(--radius), 18px)); padding: 22px; transition: background-color .45s ease, border-color .45s ease; }
+.card b { display: block; font-family: var(--display); font-weight: var(--weight); font-size: 1.25rem; margin-bottom: 8px; letter-spacing: -.01em; }
+.card span { color: var(--muted); font-size: 15.5px; }
+.card em { font-style: normal; display: block; font-family: var(--grotesk); font-weight: 800; font-size: .85rem; color: var(--accent); margin-bottom: 14px; }
+
+footer { border-top: 1px solid var(--line); padding: 26px 0; color: var(--muted); font-size: 14.5px; }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 24px; }
+
+.pitch { position: sticky; bottom: 0; z-index: 5; background: #1b1f3a; color: #e8eaf6; font-size: 14px; padding: 11px 18px; display: flex; flex-wrap: wrap; gap: 6px 18px; align-items: center; justify-content: center; text-align: center; }
+.pitch a { color: #fff; font-weight: 700; white-space: nowrap; }
+.is-tile .pitch { display: none; }
+
+@media (max-width: 760px) {
+  .top nav { display: none; }
+  .cards { grid-template-columns: 1fr; }
+  .hero::after { opacity: .12; }
+  body[data-branch="handwerk"] .hero::after { opacity: .18; width: 60%; }
+  body[data-branch="immo"] .hero::after { display: none; }
+}
+@media (prefers-reduced-motion: reduce) { * { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body data-branch="handwerk">
+<div class="demo-bar">
+  <span id="bar-text"></span>
+  <a href="../../index.html" id="bar-back"></a>
+</div>
+
+<header class="top">
+  <div class="wrap">
+    <div class="logo"><i id="initials"></i><span id="name-1"></span></div>
+    <nav aria-hidden="true"><span id="nav-1"></span><span id="nav-2"></span><span id="nav-3"></span></nav>
+    <span class="btn" id="cta-1"></span>
+  </div>
+</header>
+
+<main>
+  <div class="hero">
+    <div class="wrap">
+      <span class="kicker" id="kicker"></span>
+      <h1 id="headline"></h1>
+      <p id="sub"></p>
+      <span class="btn" id="cta-2"></span>
+    </div>
+  </div>
+  <section class="services">
+    <div class="wrap">
+      <h2 id="services-title"></h2>
+      <div class="cards" id="cards"></div>
+    </div>
+  </section>
+</main>
+
+<footer><div class="wrap"><span id="foot-name"></span><span id="foot-note"></span></div></footer>
+
+<div class="pitch">
+  <span id="pitch-text"></span>
+  <a href="../../kontakt.html?topic=web" id="pitch-link"></a>
+</div>
+
+<script>
+(function () {
+  "use strict";
+  // preview=1: Kachel oder Popup auf der CreationFirst-Seite (Hinweisleiste aus). tile=1: kleine Kachel, zusätzlich ohne Fußleiste.
+  var search = location.search;
+  var inFrame = /[?&]preview=1/.test(search);
+  if (inFrame) document.documentElement.classList.add("is-preview");
+  if (/[?&]tile=1/.test(search)) document.documentElement.classList.add("is-tile");
+  var LANG = (search.match(/[?&]lang=(en|hr)/) || [])[1] || "de";
+  document.documentElement.lang = LANG;
+
+  var UI = {
+    de: { fallback: "Dein Betrieb", nav: ["Leistungen", "Über uns", "Kontakt"], services: "Unsere Leistungen", rights: "Beispielseite",
+          bar: "Eine Vorschau von CreationFirst · deine Eingabe bleibt in deinem Browser.", back: "← Zurück zu CreationFirst",
+          pitch: "Das ist eine Vorschau mit deinem Namen. In echt bauen wir sie mit deinen Texten, Bildern und Farben.", pitchLink: "Erstgespräch anfragen →",
+          home: "../../index.html", contact: "../../kontakt.html?topic=web", title: "Vorschau – CreationFirst" },
+    en: { fallback: "Your business", nav: ["Services", "About", "Contact"], services: "Our services", rights: "Example site",
+          bar: "A preview by CreationFirst · your input stays in your browser.", back: "← Back to CreationFirst",
+          pitch: "This is a preview with your name. For real, we build it with your texts, images and colours.", pitchLink: "Book a free intro call →",
+          home: "../../en/index.html", contact: "../../en/contact.html?topic=web", title: "Preview – CreationFirst" },
+    hr: { fallback: "Tvoje poslovanje", nav: ["Usluge", "O nama", "Kontakt"], services: "Naše usluge", rights: "Primjer stranice",
+          bar: "Pregled tvrtke CreationFirst · tvoj unos ostaje u pregledniku.", back: "← Natrag na CreationFirst",
+          pitch: "Ovo je pregled s tvojim nazivom. U stvarnosti je izrađujemo s tvojim tekstovima, slikama i bojama.", pitchLink: "Zatraži besplatni razgovor →",
+          home: "../../hr/index.html", contact: "../../hr/kontakt.html?topic=web", title: "Pregled – CreationFirst" }
+  }[LANG];
+
+  // Je Branche: Etikett, Überschrift, Unterzeile ({name} wird ersetzt), drei Leistungen, Button.
+  var BRANCH = {
+    de: {
+      handwerk: ["Handwerksbetrieb", "Sauber geplant. Pünktlich gemacht.", "{name} steht für ehrliche Beratung, feste Termine und Arbeit, die hält.", [["Beratung vor Ort", "Wir schauen es uns an und sagen klar, was sinnvoll ist."], ["Festes Angebot", "Ein Preis, der vorher feststeht."], ["Saubere Ausführung", "Pünktlich, ordentlich und mit Einweisung am Ende."]], "Anfrage stellen"],
+      gastro: ["Restaurant", "Gutes Essen. Lange Abende.", "Bei {name} kommt auf den Teller, was die Saison hergibt. Reservier deinen Tisch in wenigen Sekunden.", [["Saisonale Karte", "Wechselt mit dem, was gerade frisch ist."], ["Tisch reservieren", "Online, ohne Anruf und mit sofortiger Bestätigung."], ["Feiern", "Platz und Menü für Geburtstage und Firmenessen."]], "Tisch reservieren"],
+      praxis: ["Praxis", "Gut aufgehoben. Schnell einen Termin.", "{name} nimmt sich Zeit für dich. Termine buchst du online, Erinnerungen kommen von selbst.", [["Online-Termine", "Freie Zeiten sehen und direkt buchen."], ["Klare Infos", "Was du mitbringen musst, steht vorher fest."], ["Erinnerungen", "Am Tag vorher per Nachricht."]], "Termin buchen"],
+      immo: ["Immobilien", "Das richtige Zuhause. Der richtige Käufer.", "{name} begleitet dich vom ersten Gespräch bis zur Schlüsselübergabe.", [["Bewertung", "Eine ehrliche Einschätzung vor Ort."], ["Besichtigungen", "Termine online anfragen, ohne Hin und Her."], ["Verkauf & Vermietung", "Vom Exposé bis zum Vertrag."]], "Besichtigung anfragen"],
+      service: ["Dienstleistung", "Klar beraten. Sauber umgesetzt.", "{name} hört zu, plant mit dir und liefert, was vereinbart ist.", [["Erstgespräch", "Kostenlos und ohne Verpflichtung."], ["Festes Angebot", "Umfang und Preis stehen vorher fest."], ["Persönliche Betreuung", "Ein Ansprechpartner von Anfang bis Ende."]], "Gespräch vereinbaren"]
+    },
+    en: {
+      handwerk: ["Trade business", "Carefully planned. Done on time.", "{name} stands for honest advice, fixed dates and work that lasts.", [["On-site advice", "We take a look and tell you clearly what makes sense."], ["Fixed quote", "A price that is settled beforehand."], ["Tidy workmanship", "On time, neat and with a walkthrough at the end."]], "Send an inquiry"],
+      gastro: ["Restaurant", "Good food. Long evenings.", "At {name}, what the season offers ends up on the plate. Book your table in a few seconds.", [["Seasonal menu", "Changes with what is fresh right now."], ["Book a table", "Online, without a call and with instant confirmation."], ["Celebrations", "Room and a menu for birthdays and company dinners."]], "Book a table"],
+      praxis: ["Practice", "In good hands. An appointment in no time.", "{name} takes time for you. Book appointments online; reminders arrive on their own.", [["Online appointments", "See free slots and book directly."], ["Clear information", "What to bring is settled beforehand."], ["Reminders", "By message the day before."]], "Book an appointment"],
+      immo: ["Real estate", "The right home. The right buyer.", "{name} is with you from the first conversation to the handover of keys.", [["Valuation", "An honest estimate on site."], ["Viewings", "Request dates online, without back and forth."], ["Sales & lettings", "From the listing to the contract."]], "Request a viewing"],
+      service: ["Services", "Clear advice. Clean delivery.", "{name} listens, plans with you and delivers what was agreed.", [["Intro call", "Free and without obligation."], ["Fixed quote", "Scope and price are settled beforehand."], ["Personal support", "One contact from start to finish."]], "Arrange a call"]
+    },
+    hr: {
+      handwerk: ["Obrt", "Uredno planirano. Gotovo na vrijeme.", "{name}: iskren savjet, čvrsti termini i rad koji traje.", [["Savjet na licu mjesta", "Pogledamo i jasno kažemo što ima smisla."], ["Čvrsta ponuda", "Cijena koja je poznata unaprijed."], ["Uredna izvedba", "Na vrijeme, uredno i s uputama na kraju."]], "Pošalji upit"],
+      gastro: ["Restoran", "Dobra hrana. Duge večeri.", "{name}: na tanjur stiže ono što nudi sezona. Rezerviraj stol u nekoliko sekundi.", [["Sezonski jelovnik", "Mijenja se s onim što je trenutno svježe."], ["Rezervacija stola", "Online, bez poziva i s trenutnom potvrdom."], ["Proslave", "Prostor i meni za rođendane i poslovne večere."]], "Rezerviraj stol"],
+      praxis: ["Ordinacija", "U dobrim rukama. Brzo do termina.", "{name}: imamo vremena za tebe. Termine rezerviraš online, a podsjetnici stižu sami.", [["Online termini", "Vidi slobodne termine i odmah rezerviraj."], ["Jasne informacije", "Unaprijed znaš što trebaš ponijeti."], ["Podsjetnici", "Porukom dan prije."]], "Rezerviraj termin"],
+      immo: ["Nekretnine", "Pravi dom. Pravi kupac.", "{name}: uz tebe od prvog razgovora do primopredaje ključeva.", [["Procjena", "Iskrena procjena na licu mjesta."], ["Razgledi", "Zatraži termin online, bez dopisivanja."], ["Prodaja i najam", "Od oglasa do ugovora."]], "Zatraži razgled"],
+      service: ["Usluge", "Jasan savjet. Uredna izvedba.", "{name}: slušamo, planiramo s tobom i isporučujemo dogovoreno.", [["Uvodni razgovor", "Besplatno i bez obveze."], ["Čvrsta ponuda", "Opseg i cijena poznati su unaprijed."], ["Osobna podrška", "Jedna kontakt-osoba od početka do kraja."]], "Dogovori razgovor"]
+    }
+  }[LANG];
+
+  function $(id) { return document.getElementById(id); }
+  function clean(v, max) { return String(v == null ? "" : v).replace(/\s+/g, " ").trim().slice(0, max); }
+
+  var state = { name: "", branch: "handwerk", city: "" };
+  var lastBranch = null;
+
+  function render() {
+    var b = BRANCH[state.branch] ? state.branch : "handwerk";
+    var data = BRANCH[b];
+    var name = state.name || UI.fallback;
+    var words = name.split(" ").filter(Boolean);
+    var initials = (words.length > 1 ? words[0].charAt(0) + words[1].charAt(0) : name.slice(0, 2)).toUpperCase();
+
+    document.body.setAttribute("data-branch", b);
+    $("initials").textContent = initials;
+    $("name-1").textContent = name;
+    $("kicker").textContent = state.city ? data[0] + " · " + state.city : data[0];
+    $("headline").textContent = data[1];
+    $("sub").textContent = data[2].replace("{name}", name);
+    $("cta-1").textContent = data[4];
+    $("cta-2").textContent = data[4];
+    $("foot-name").textContent = "© " + name + (state.city ? " · " + state.city : "");
+
+    if (b !== lastBranch) {
+      lastBranch = b;
+      var cards = $("cards");
+      cards.innerHTML = "";
+      data[3].forEach(function (s, i) {
+        var card = document.createElement("div");
+        card.className = "card swap";
+        card.style.animationDelay = (i * 70) + "ms";
+        var no = document.createElement("em");
+        no.textContent = "0" + (i + 1);
+        var t = document.createElement("b");
+        t.textContent = s[0];
+        var d = document.createElement("span");
+        d.textContent = s[1];
+        card.appendChild(no);
+        card.appendChild(t);
+        card.appendChild(d);
+        cards.appendChild(card);
+      });
+      ["headline", "sub"].forEach(function (id) {
+        var el = $(id);
+        el.classList.remove("swap");
+        void el.offsetWidth;
+        el.classList.add("swap");
+      });
+    }
+  }
+
+  function apply(next) {
+    if (!next || typeof next !== "object") return;
+    if ("name" in next) state.name = clean(next.name, 40);
+    if ("branch" in next) state.branch = clean(next.branch, 20);
+    if ("city" in next) state.city = clean(next.city, 30);
+    render();
+  }
+
+  // Feste Texte
+  document.title = UI.title;
+  $("bar-text").textContent = UI.bar;
+  $("bar-back").textContent = UI.back;
+  $("bar-back").setAttribute("href", UI.home);
+  $("nav-1").textContent = UI.nav[0];
+  $("nav-2").textContent = UI.nav[1];
+  $("nav-3").textContent = UI.nav[2];
+  $("services-title").textContent = UI.services;
+  $("foot-note").textContent = UI.rights + " · CreationFirst";
+  $("pitch-text").textContent = UI.pitch;
+  $("pitch-link").textContent = UI.pitchLink;
+  $("pitch-link").setAttribute("href", UI.contact);
+  if (inFrame) {
+    $("pitch-link").setAttribute("target", "_top");
+    $("bar-back").setAttribute("target", "_top");
+  }
+
+  // Startwerte aus dem Teil hinter # (wird nicht an den Server geschickt): #n=Name&b=branche&c=Ort
+  var hash = {};
+  location.hash.replace(/^#/, "").split("&").forEach(function (pair) {
+    var i = pair.indexOf("=");
+    if (i > 0) { try { hash[pair.slice(0, i)] = decodeURIComponent(pair.slice(i + 1)); } catch (e) { /* kaputte Kodierung ignorieren */ } }
+  });
+  apply({ name: hash.n || "", branch: hash.b || "handwerk", city: hash.c || "" });
+
+  // Live-Aktualisierung von der CreationFirst-Seite (nur gleiche Herkunft).
+  window.addEventListener("message", function (e) {
+    if (e.origin !== location.origin || !e.data || e.data.type !== "cf-preview") return;
+    apply(e.data.state);
+  });
+  if (window.parent !== window) {
+    try { window.parent.postMessage({ type: "cf-preview-ready" }, location.origin); } catch (e) { /* ohne Elternseite egal */ }
+  }
+})();
+</script>
+</body>
+</html>

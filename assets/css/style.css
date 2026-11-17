@@ -1903,3 +1903,28 @@ html.modal-open { overflow: hidden; }
   .live-preview-cta::before, .bl-end b { animation: none; }
   .demo-modal[open], .demo-modal::backdrop { animation: none; }
 }
+
+/* 23 Namens-Vorschau auf der Startseite */
+.name-preview { background: var(--color-bg-alt); border-bottom: 1px solid var(--color-border); }
+.np-grid { display: grid; grid-template-columns: minmax(0, .82fr) minmax(0, 1.18fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+.np-form h2 { font-size: clamp(2rem, 3.6vw, 3.1rem); letter-spacing: -.04em; }
+.np-form .lede { margin-bottom: 26px; }
+.np-field { display: grid; gap: 8px; margin-bottom: 18px; }
+.np-field label, .np-label { font-size: 13px; font-weight: 700; color: var(--color-text-muted); }
+.np-field input { font: inherit; font-size: 1.05rem; min-height: 54px; padding: 12px 16px; border-radius: 14px; border: 1.5px solid var(--color-border-strong); background: var(--input-bg); color: var(--color-text); width: 100%; transition: border-color .15s ease, box-shadow .15s ease; }
+.np-field input:focus { outline: none; border-color: var(--color-primary); box-shadow: 0 0 0 4px rgba(79, 70, 229, .18); }
+.np-chips { display: flex; flex-wrap: wrap; gap: 8px; }
+.np-chip { min-height: 42px; padding: 8px 16px; border-radius: var(--radius-full); border: 1.5px solid var(--color-border-strong); background: transparent; color: var(--color-text-muted); font-weight: 650; font-size: .92rem; transition: background-color .15s ease, color .15s ease, border-color .15s ease; }
+.np-chip:hover { border-color: var(--color-primary-text); color: var(--color-text); }
+.np-chip[aria-pressed="true"] { background: var(--color-primary); border-color: var(--color-primary); color: #fff; }
+.np-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 14px 22px; margin-top: 6px; }
+.np-note { margin: 16px 0 0; font-size: .8rem; color: var(--color-text-soft); }
+.np-stage .browser-frame { border: 1px solid var(--color-border-strong); border-radius: 18px; overflow: hidden; box-shadow: var(--shadow-lg); }
+.np-stage .bf-view iframe { pointer-events: none; }
+.scrollfx .np-stage .browser-frame { transform: perspective(1600px) rotateY(calc((1 - var(--ip, 1)) * -14deg)) rotateX(calc((1 - var(--ip, 1)) * 6deg)) scale(calc(.9 + var(--ip, 1) * .1)); transform-origin: 0 50%; will-change: transform; }
+@media (max-width: 900px) {
+  .np-grid { grid-template-columns: minmax(0, 1fr); }
+  /* Auf dem Handy steht die Vorschau oben und bleibt beim Tippen sichtbar */
+  .np-stage { order: -1; position: sticky; top: calc(var(--header-h) + 8px); z-index: 2; }
+  .scrollfx .np-stage .browser-frame { transform: none; opacity: 1; }
+}

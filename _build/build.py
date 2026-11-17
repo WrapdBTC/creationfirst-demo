@@ -17,7 +17,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 SRC = os.path.join(HERE, "src")
 BASE = "https://creationfirst.io/"
-VER = "20261117-4"
+VER = "20261117-5"
 # DEMO=1 python3 _build/build.py  -> Vorschau-Build: noindex auf allen Seiten und Hinweisleiste oben.
 DEMO = os.environ.get("DEMO") == "1"
 YEAR = "2026"
@@ -47,7 +47,7 @@ PAGES = {
 
 CHAT = ["site-chat-config", "site-chat"]
 SCRIPTS = {
- "home": ["main", "hero-demo", "time-calculator"] + CHAT,
+ "home": ["main", "hero-demo", "name-preview", "time-calculator"] + CHAT,
  "playground": ["main", "game", "idea-generator", "before-after-sim", "time-calculator"] + CHAT,
 }
 # hero images to preload (LCP)

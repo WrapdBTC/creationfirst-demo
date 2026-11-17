@@ -67,6 +67,44 @@
 <a href="{{url:realestate}}">Nekretnine</a>
 </div>
 </div>
+<section class="section name-preview" data-name-preview>
+<div class="container np-grid">
+<div class="np-form" data-reveal>
+<p class="eyebrow">Isprobaj</p>
+<h2>Pogledaj svoju stranicu prije nego što je izradimo.</h2>
+<p class="lede">Upiši naziv tvrtke i odaberi djelatnost. Pregled se odmah mijenja.</p>
+<div class="np-field">
+<label for="np-name">Naziv tvrtke</label>
+<input id="np-name" data-np-name type="text" maxlength="40" autocomplete="organization" placeholder="npr. Soboslikar Horvat">
+</div>
+<div class="np-field">
+<span class="np-label" id="np-branch-label">Djelatnost</span>
+<div class="np-chips" role="group" aria-labelledby="np-branch-label">
+<button type="button" class="np-chip" data-np-branch="handwerk" aria-pressed="true">Obrt</button>
+<button type="button" class="np-chip" data-np-branch="gastro" aria-pressed="false">Ugostiteljstvo</button>
+<button type="button" class="np-chip" data-np-branch="praxis" aria-pressed="false">Ordinacija</button>
+<button type="button" class="np-chip" data-np-branch="immo" aria-pressed="false">Nekretnine</button>
+<button type="button" class="np-chip" data-np-branch="service" aria-pressed="false">Usluge</button>
+</div>
+</div>
+<div class="np-field">
+<label for="np-city">Mjesto (neobavezno)</label>
+<input id="np-city" data-np-city type="text" maxlength="30" autocomplete="address-level2" placeholder="npr. Split">
+</div>
+<div class="np-actions">
+<a class="btn btn-primary" data-np-open data-demo="Tvoj pregled" href="{{R}}demos/vorschau/?lang=hr">Pogledaj u punoj veličini</a>
+<a class="text-link" href="{{url:contact}}?topic=web">Zatraži ovakvu stranicu →</a>
+</div>
+<p class="np-note">Tvoj unos ostaje u pregledniku i ne sprema se.</p>
+</div>
+<div class="np-stage" data-reveal>
+<div class="browser-frame">
+<div class="bf-bar" aria-hidden="true"><i></i><i></i><i></i><span data-np-host>dein-betrieb.example</span></div>
+<div class="bf-view" data-scale-frame><iframe src="{{R}}demos/vorschau/?preview=1&amp;tile=1&amp;lang=hr" loading="lazy" tabindex="-1" title="Pregled tvoje stranice" scrolling="no"></iframe></div>
+</div>
+</div>
+</div>
+</section>
 <section class="section">
 <div class="container">
 <div class="section-head left" data-reveal>

@@ -67,6 +67,44 @@
 <a href="{{url:realestate}}">Immobilien &amp; Makler</a>
 </div>
 </div>
+<section class="section name-preview" data-name-preview>
+<div class="container np-grid">
+<div class="np-form" data-reveal>
+<p class="eyebrow">Probier es aus</p>
+<h2>Sieh deine Seite, bevor wir sie bauen.</h2>
+<p class="lede">Tipp deinen Firmennamen ein und wähl deine Branche. Die Vorschau baut sich sofort um.</p>
+<div class="np-field">
+<label for="np-name">Firmenname</label>
+<input id="np-name" data-np-name type="text" maxlength="40" autocomplete="organization" placeholder="z. B. Malerbetrieb Weber">
+</div>
+<div class="np-field">
+<span class="np-label" id="np-branch-label">Branche</span>
+<div class="np-chips" role="group" aria-labelledby="np-branch-label">
+<button type="button" class="np-chip" data-np-branch="handwerk" aria-pressed="true">Handwerk</button>
+<button type="button" class="np-chip" data-np-branch="gastro" aria-pressed="false">Gastronomie</button>
+<button type="button" class="np-chip" data-np-branch="praxis" aria-pressed="false">Praxis</button>
+<button type="button" class="np-chip" data-np-branch="immo" aria-pressed="false">Immobilien</button>
+<button type="button" class="np-chip" data-np-branch="service" aria-pressed="false">Dienstleistung</button>
+</div>
+</div>
+<div class="np-field">
+<label for="np-city">Ort (optional)</label>
+<input id="np-city" data-np-city type="text" maxlength="30" autocomplete="address-level2" placeholder="z. B. Bonn">
+</div>
+<div class="np-actions">
+<a class="btn btn-primary" data-np-open data-demo="Deine Vorschau" href="{{R}}demos/vorschau/">In groß ansehen</a>
+<a class="text-link" href="{{url:contact}}?topic=web">So eine Seite anfragen →</a>
+</div>
+<p class="np-note">Deine Eingabe bleibt in deinem Browser und wird nicht gespeichert.</p>
+</div>
+<div class="np-stage" data-reveal>
+<div class="browser-frame">
+<div class="bf-bar" aria-hidden="true"><i></i><i></i><i></i><span data-np-host>dein-betrieb.example</span></div>
+<div class="bf-view" data-scale-frame><iframe src="{{R}}demos/vorschau/?preview=1&amp;tile=1" loading="lazy" tabindex="-1" title="Vorschau deiner Seite" scrolling="no"></iframe></div>
+</div>
+</div>
+</div>
+</section>
 <section class="section">
 <div class="container">
 <div class="section-head left" data-reveal>

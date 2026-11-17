@@ -566,7 +566,7 @@
 
   var heroes = all(".hero, .page-hero, .studio-hero.compact");
   var liveDemo = document.querySelector(".next-hero .live-demo");
-  var images = all(".service-visual, .section-figure, .founder-photo, .case-visual > img");
+  var images = all(".service-visual, .section-figure, .founder-photo, .case-visual > img, .np-stage .browser-frame");
   var strips = all(".process-strip").map(function (el) { return { el: el, items: Array.prototype.slice.call(el.children) }; });
   var grids = all(".grid, .service-paths").map(function (el) {
     var items = Array.prototype.slice.call(el.children).filter(function (c) { return /usp-card|process-step|\bcard\b/.test(c.className) || el.classList.contains("service-paths"); });
@@ -736,7 +736,9 @@
     titleEl.textContent = name;
     frame.setAttribute("title", name);
     tabLink.setAttribute("href", href);
-    frame.setAttribute("src", href + (href.indexOf("?") === -1 ? "?" : "&") + "preview=1");
+    var hashAt = href.indexOf("#"); /* der Teil hinter # (Namens-Vorschau) bleibt am Ende stehen */
+    var base = hashAt === -1 ? href : href.slice(0, hashAt);
+    frame.setAttribute("src", base + (base.indexOf("?") === -1 ? "?" : "&") + "preview=1" + (hashAt === -1 ? "" : href.slice(hashAt)));
     document.documentElement.classList.add("modal-open");
     dialog.showModal();
   });
