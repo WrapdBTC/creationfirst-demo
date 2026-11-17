@@ -10,7 +10,8 @@ Was sich gegenüber der Live-Seite geändert hat:
 
 - **Startseite (DE/EN/HR):** Hero mit Live-Simulation, Branchenleiste, zwei Demo-Betriebe als Vorschau,
   Zeitrechner, Preis-Hinweise im Ablauf. Quellen: `_build/src/<sprache>/home.html`.
-- **Beispiele:** `demos/elektro/` (geführte Anfrage), `demos/restaurant/` (Tischreservierung) und `demos/makler/` (Posteingang mit vorbereiteten Antworten).
+- **Beispiele (eines je Leistung):** `demos/elektro/` (Website & Anfrage), `demos/restaurant/` (Web-App & Buchung), `demos/makler/` (KI-Posteingang),
+  `demos/shop/` (Online-Shop), `demos/marke/` (Branding & SEO), `demos/betreuung/` (Wartung & Hosting). Die drei neueren teilen sich `demos/shared.js`.
   Eigenständige Seiten, nicht Teil des Builds, immer `noindex`, erfundene Betriebe, es wird nichts gesendet.
 - **Schrift:** Bricolage Grotesque (SIL OFL), selbst gehostet in `assets/fonts/`, für alle Überschriften.
 - **Styles:** Abschnitt „19 Next“ am Ende von `assets/css/style.css`.
@@ -23,8 +24,7 @@ Was sich gegenüber der Live-Seite geändert hat:
   Titel leuchten Wort für Wort auf, Hero zieht sich zurück, Bilder wachsen ins Bild, Karten fächern auf, Ablauf zeichnet sich.
 - **Popup und Live-Vorschauen:** Abschnitt „22“ in `style.css`, letzter Block in `main.js`. Jeder Link auf `demos/` öffnet das Beispiel
   in einem Fenster über der Seite. Leistungen, Lösungen, vier Branchenseiten und Über uns zeigen Live-Vorschauen statt Stockfotos.
-- **Namens-Vorschau:** Abschnitt auf der Startseite (`data-name-preview`, `assets/js/name-preview.js`, Styles in Abschnitt „23“).
-  Die Vorschau-Seite liegt in `demos/vorschau/` (fünf Branchen-Looks, DE/EN/HR). Eingaben bleiben im Browser.
+- **Gebaute Szenen statt Stockfotos:** Abschnitt „23“ in `style.css`; Branchenseiten, KI-Seite und Leistungen-Hero nutzen `.scene`-Bausteine ohne Text.
 - **Vorschaubild fürs Teilen:** `assets/images/og-image.png` neu (1280 × 720).
 - **Beispiele mehrsprachig:** `?lang=en` bzw. `?lang=hr`; die Übersetzungen stehen als Wörterbuch im jeweiligen Skript.
 - **Lösungen-Seite:** Links zu den beiden Demos. **Buttons:** einheitlich „Erstgespräch anfragen“.

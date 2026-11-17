@@ -17,7 +17,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 ROOT = os.path.dirname(HERE)
 SRC = os.path.join(HERE, "src")
 BASE = "https://creationfirst.io/"
-VER = "20261117-5"
+VER = "20261117-6"
 # DEMO=1 python3 _build/build.py  -> Vorschau-Build: noindex auf allen Seiten und Hinweisleiste oben.
 DEMO = os.environ.get("DEMO") == "1"
 YEAR = "2026"
@@ -47,17 +47,11 @@ PAGES = {
 
 CHAT = ["site-chat-config", "site-chat"]
 SCRIPTS = {
- "home": ["main", "hero-demo", "name-preview", "time-calculator"] + CHAT,
+ "home": ["main", "hero-demo", "time-calculator"] + CHAT,
  "playground": ["main", "game", "idea-generator", "before-after-sim", "time-calculator"] + CHAT,
 }
 # hero images to preload (LCP)
-PRELOAD = {
- "trades": "images/bau-handwerk-hero.webp",
- "realestate": "images/immobilien-makler-hero.webp",
- "practices": "images/praxen-lokale-services-hero.webp",
- "field_services": "images/sanitaer-elektro-klima-hero.webp",
- "hospitality": "images/gastronomie-hotels-hero.webp",
-}
+PRELOAD = {}  # keine Hero-Fotos mehr: die Unterseiten zeigen gebaute Szenen
 NAV_KEY = {"services": "services", "ai": "ai", "portfolio": "portfolio", "about": "about",
            "playground": "playground", "contact": "contact", "trades": "ai",
            "hospitality": "ai", "field_services": "ai", "practices": "ai", "realestate": "ai"}
