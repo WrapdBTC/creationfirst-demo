@@ -582,6 +582,7 @@
     return { sec: sec, sticky: sec.querySelector(".hscroll-sticky"), track: sec.querySelector(".hscroll-track"), bar: sec.querySelector(".hscroll-progress"), overflow: 0 };
   });
   var marquees = all(".big-marquee-track").map(function (el) { return { el: el, half: 0 }; });
+  var tagRows = all(".tag-row").map(function (el) { return { el: el, dir: parseFloat(el.getAttribute("data-dir")) || 1 }; });
 
   var vh = window.innerHeight;
   var headerH = 72;
@@ -658,6 +659,13 @@
       if (g.bar) g.bar.style.setProperty("--hp", p.toFixed(3));
     });
 
+    tagRows.forEach(function (t) {
+      var r = t.el.getBoundingClientRect();
+      if (r.bottom < -100 || r.top > vh + 100) return;
+      var p = (vh - r.top) / (vh + r.height);
+      t.el.style.transform = "translate3d(" + (t.dir * (p - 0.5) * 520).toFixed(1) + "px,0,0)";
+    });
+
     marquees.forEach(function (m) {
       if (!m.half) return;
       m.el.style.transform = "translate3d(" + (-((y * 0.55) % m.half)).toFixed(1) + "px,0,0)";
@@ -676,4 +684,60 @@
   window.addEventListener("load", refresh);
   if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
   refresh();
+})();
+
+/* Beispiele im Popup: Links auf demos/ öffnen ein Fenster über der Seite statt die Seite zu verlassen.
+   Ohne JavaScript, mit Strg/Cmd-Klick oder per „In neuem Tab“ bleibt es ein normaler Link. */
+(function () {
+  "use strict";
+  if (!("HTMLDialogElement" in window)) return;
+  var lang = (document.documentElement.lang || "de").slice(0, 2);
+  var TXT = {
+    de: { note: "Beispiel zum Ausprobieren · es wird nichts gesendet", tab: "In neuem Tab ↗", close: "Schließen" },
+    en: { note: "An example to try out · nothing is sent", tab: "Open in new tab ↗", close: "Close" },
+    hr: { note: "Primjer za isprobavanje · ništa se ne šalje", tab: "Otvori u novoj kartici ↗", close: "Zatvori" }
+  }[lang] || null;
+  if (!TXT) return;
+
+  var dialog, frame, titleEl, tabLink, lastFocus;
+  function build() {
+    dialog = document.createElement("dialog");
+    dialog.className = "demo-modal";
+    dialog.innerHTML = '<div class="dm-bar"><span class="dm-dots" aria-hidden="true"><i></i><i></i><i></i></span>' +
+      '<strong class="dm-title"></strong><span class="dm-note"></span><a class="dm-new" target="_blank" rel="noopener"></a>' +
+      '<button class="dm-close" type="button"></button></div><iframe title=""></iframe>';
+    frame = dialog.querySelector("iframe");
+    titleEl = dialog.querySelector(".dm-title");
+    tabLink = dialog.querySelector(".dm-new");
+    dialog.querySelector(".dm-note").textContent = TXT.note;
+    tabLink.textContent = TXT.tab;
+    var closeBtn = dialog.querySelector(".dm-close");
+    closeBtn.textContent = "×";
+    closeBtn.setAttribute("aria-label", TXT.close);
+    closeBtn.addEventListener("click", function () { dialog.close(); });
+    dialog.addEventListener("click", function (e) { if (e.target === dialog) dialog.close(); });
+    dialog.addEventListener("close", function () {
+      frame.removeAttribute("src");
+      document.documentElement.classList.remove("modal-open");
+      if (lastFocus && lastFocus.focus) lastFocus.focus();
+    });
+    document.body.appendChild(dialog);
+  }
+
+  document.addEventListener("click", function (e) {
+    if (e.defaultPrevented || e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest ? e.target.closest('a[href*="demos/"]') : null;
+    if (!a || a.target === "_blank") return;
+    e.preventDefault();
+    if (!dialog) build();
+    var href = a.getAttribute("href");
+    var name = a.getAttribute("data-demo") || a.textContent.trim();
+    lastFocus = a;
+    titleEl.textContent = name;
+    frame.setAttribute("title", name);
+    tabLink.setAttribute("href", href);
+    frame.setAttribute("src", href + (href.indexOf("?") === -1 ? "?" : "&") + "preview=1");
+    document.documentElement.classList.add("modal-open");
+    dialog.showModal();
+  });
 })();

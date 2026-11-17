@@ -271,7 +271,11 @@ footer b { color: var(--cream); font-family: var(--serif); font-size: 1.2rem; fo
 <script>
 (function () {
   "use strict";
-  if (/[?&]preview=1/.test(location.search)) document.documentElement.classList.add("is-preview");
+  // preview=1: Vorschau-Kachel oder Popup auf der CreationFirst-Seite. Hinweisleiste aus, Links zurück zur Seite verlassen den Rahmen.
+  if (/[?&]preview=1/.test(location.search)) {
+    document.documentElement.classList.add("is-preview");
+    document.querySelectorAll('a[href^="../../"]').forEach(function (a) { a.setAttribute("target", "_top"); });
+  }
 
   // Sprache: ?lang=en oder ?lang=hr. Deutsch steht im HTML, die anderen Sprachen ersetzen die Texte
   // anhand des deutschen Wortlauts (I18N: deutscher Text -> [Englisch, Kroatisch]).

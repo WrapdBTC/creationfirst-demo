@@ -21,6 +21,9 @@ Was sich gegenüber der Live-Seite geändert hat:
   automatisches Einblenden, scroll-gekoppelte Bilder und Titel, Lichtkegel auf Karten, Laufband vor dem Footer (`marquee()` in `build.py`).
 - **Scroll-Effekte:** Abschnitt „21 Scroll-Effekte“ in `style.css`, gesteuert vom letzten Block in `main.js`: Quer-Galerie der Beispiele,
   Titel leuchten Wort für Wort auf, Hero zieht sich zurück, Bilder wachsen ins Bild, Karten fächern auf, Ablauf zeichnet sich.
+- **Popup und Live-Vorschauen:** Abschnitt „22“ in `style.css`, letzter Block in `main.js`. Jeder Link auf `demos/` öffnet das Beispiel
+  in einem Fenster über der Seite. Leistungen, Lösungen, vier Branchenseiten und Über uns zeigen Live-Vorschauen statt Stockfotos.
+- **Vorschaubild fürs Teilen:** `assets/images/og-image.png` neu (1280 × 720).
 - **Beispiele mehrsprachig:** `?lang=en` bzw. `?lang=hr`; die Übersetzungen stehen als Wörterbuch im jeweiligen Skript.
 - **Lösungen-Seite:** Links zu den beiden Demos. **Buttons:** einheitlich „Erstgespräch anfragen“.
 
